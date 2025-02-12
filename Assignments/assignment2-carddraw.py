@@ -20,6 +20,8 @@ suits = [card['suit'] for card in cards]
 value_counts = {value: values.count(value) for value in set(values)}
 pairs = sum(1 for count in value_counts.values() if count == 2)
 triples = sum(1 for count in value_counts.values() if count == 3)
+quads = sum(1 for count in value_counts.values() if count == 4)
+
 
 # Check for all same suit
 same_suit = len(set(suits)) == 1
@@ -34,6 +36,8 @@ if pairs > 0:
     print(f"Congratulations! You have {pairs} pair(s).")
 if triples > 0:
     print(f"Congratulations! You have {triples} triple(s).")
+if quads > 0:
+    print(f"Congratulations! You have {quads} quad(s).")
 if same_suit:
     print("Congratulations! All your cards are of the same suit.")
 if is_straight:
