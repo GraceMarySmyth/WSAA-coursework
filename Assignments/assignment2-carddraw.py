@@ -25,7 +25,7 @@ triples = sum(1 for count in value_counts.values() if count == 3)
 same_suit = len(set(suits)) == 1
 
 # Check for straight
-value_order = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+value_order = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'JOKER', 'QUEEN', 'KING', 'ACE']
 sorted_values = sorted(values, key=lambda x: value_order.index(x))
 is_straight = all(value_order.index(sorted_values[i]) + 1 == value_order.index(sorted_values[i + 1]) for i in range(len(sorted_values) - 1))
 
@@ -38,3 +38,5 @@ if same_suit:
     print("Congratulations! All your cards are of the same suit.")
 if is_straight:
     print("Congratulations! You have a straight.")
+
+
