@@ -16,3 +16,10 @@ A quiz was incorporated here and sent in by moodle.
 
 2. Assigment3-cso.py
 A program that retrieves the dataset for the "exchequer account (historical series)" from the CSO, and stores it into a file called "cso.json".
+(I had an issue with the old repository. I spoke to Andrew and all the old files are transfered here)
+
+3. Assignment4-github.py
+Aprogramme in python that will firstly read a file from a repository. It then replaces all the instances of the text "Andrew: with the name "Grace". The programme then commits that change and push the file back to the repository. 
+
+A quiz was inserted here. 
+ 
