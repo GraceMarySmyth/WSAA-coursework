@@ -20,7 +20,7 @@ A program that retrieves the dataset for the "exchequer account (historical seri
 
 3. Assignment4-github.py
 Aprogramme in python that will firstly read a file from a repository. It then replaces all the instances of the text "Andrew: with the name "Grace". The programme then commits that change and push the file back to the repository. 
-I first created a txt file with a story from Chat GPT about a boy called Andrew. The name Andrew is mentioned 4 times in the story. 
+I first created a txt file with a story from Chat GPT about a boy called Andrew. The name Andrew is mentioned 4 times in the story. This file was called assign4story.txt  
 
 A quiz was inserted here. 
  
