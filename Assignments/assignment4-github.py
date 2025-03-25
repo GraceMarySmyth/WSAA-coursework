@@ -10,6 +10,8 @@ old_gender= 'he'
 new_gender= 'she'
 old_pronown= 'his'
 new_pronown= 'her'
+old2_pronown= 'him'
+new2_pronown= 'her'
 
 # Initialize the repository
 repo = git.Repo(repo_path)
@@ -23,7 +25,7 @@ with open(file_path, 'r') as file:
 new_file_contents = file_contents.replace(old_name, new_name)
 new_file_contents = new_file_contents.replace(old_gender, new_gender)
 new_file_contents = new_file_contents.replace(old_pronown, new_pronown) 
-
+new_file_contents = new_file_contents.replace(old2_pronown, new2_pronown)   
 # Write the new file contents back to the file
 with open(file_path, 'w') as file:
     file.write(new_file_contents)
