@@ -1,9 +1,29 @@
 import os
 import git
+import requests
+import json
 
+filename = 'assign4story.txt'
+
+url = 'https://github.com/GraceMarySmyth/WSAA-coursework/tree/main/Assignments?'
+response = requests.get(url)
+print (response.status_code) # 200 shows code so far is working
+repojson = response.json()
+# Print the JSON response to inspect its structure
+print(json.dumps(repojson, indent=4))
+
+# Access the correct key if it exists, or handle the error
+if 'assign4story.txt' in repojson:
+    print(repojson['assign4story.txt'])
+else:
+    print("Key 'assign4story.txt' not found in the response.")
+
+
+
+'''
 # Define the repository path and files to modify and to modify the name Andrew
-repo_path = '/path/to/your/repository'
-file_name = 'assign4story.txt'
+repo_path = 'https://github.com/GraceMarySmyth/WSAA-coursework/tree/main/Assignments'
+file_name = '/assign4story.txt'
 old_name = 'Andrew'
 new_name = 'Grace'
 old_gender= 'he'
@@ -37,3 +57,4 @@ repo.index.commit('Replaced instances of Andrew with Grace')
 # Push the changes
 origin = repo.remote(name='origin')
 origin.push()
+'''
