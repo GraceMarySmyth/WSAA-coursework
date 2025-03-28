@@ -4,28 +4,13 @@ import json
 import git 
 
 
-filename = 'assign4story.txt'
+filename = 'assign4story.json'
 
-url = 'https://api.github.com/repos/GraceMarySmyth/WSAA-coursework/contents/Assignments'
+url = 'https://api.github.com/repos/GraceMarySmyth/WSAA-coursework/contents/Assignments/assign4story.txt?ref=main'
+
 response = requests.get(url)
-
-if response.status_code == 200:
-    repojson = response.json()
-    # Print the JSON response to inspect its structure
-    print(json.dumps(repojson, indent=4))
-
-    # Search for the file in the response
-    file_found = False
-    for file in repojson:
-        if file['name'] == 'assign4story.txt':
-            print(f"File found: {file['download_url']}")
-            file_found = True
-            break
-
-    if not file_found:
-        print("File 'assign4story.txt' not found in the repository.")
-else:
-    print(f"Failed to fetch repository contents. Status code: {response.status_code}")
+print (response.status_code)
+repoJSON = response.json()
 
 
 
