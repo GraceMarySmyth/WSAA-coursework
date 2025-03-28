@@ -1,22 +1,31 @@
-import os
-import git
+# Removed unused imports
 import requests
 import json
+import git 
+
 
 filename = 'assign4story.txt'
 
-url = 'https://github.com/GraceMarySmyth/WSAA-coursework/tree/main/Assignments?'
+url = 'https://api.github.com/repos/GraceMarySmyth/WSAA-coursework/contents/Assignments'
 response = requests.get(url)
-print (response.status_code) # 200 shows code so far is working
-repojson = response.json()
-# Print the JSON response to inspect its structure
-print(json.dumps(repojson, indent=4))
 
-# Access the correct key if it exists, or handle the error
-if 'assign4story.txt' in repojson:
-    print(repojson['assign4story.txt'])
+if response.status_code == 200:
+    repojson = response.json()
+    # Print the JSON response to inspect its structure
+    print(json.dumps(repojson, indent=4))
+
+    # Search for the file in the response
+    file_found = False
+    for file in repojson:
+        if file['name'] == 'assign4story.txt':
+            print(f"File found: {file['download_url']}")
+            file_found = True
+            break
+
+    if not file_found:
+        print("File 'assign4story.txt' not found in the repository.")
 else:
-    print("Key 'assign4story.txt' not found in the response.")
+    print(f"Failed to fetch repository contents. Status code: {response.status_code}")
 
 
 
