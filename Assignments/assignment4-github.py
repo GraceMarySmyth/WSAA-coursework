@@ -3,6 +3,40 @@ import requests
 import json
 import git
 import os
+from github import Github
+from config import config as cfg
+
+
+'''
+# install on command line
+pip install PyGithub
+'''
+apikey = cfg["githubkey"]
+
+g = Github(apikey)
+repo = g.get_user().get_repo('GraceMarySmyth/WSAA-coursework')
+#print (repo.clone_url)
+
+fileinfo = repo.get_contents('Assignments/assign4story.txt')
+urlOfFile = fileInfo.download_url
+#print (urlOfFile)
+#print (fileinfo.path)
+#print (fileinfo.type)
+
+response = requests.get(urlOfFile) 
+contentOfFile = response.text 
+print (contentOfFile)
+
+newContents = contentOfFile .replace('Andrew', 'Grace')
+newContents = newContents.replace('he', 'she') 
+newContents = newContents.replace('his', 'her')
+newContents = newContents.replace('him', 'her')
+
+
+# Update the file in the repository
+repo.update_file(fileinfo.path, "Updated file with new name", newContents, fileinfo.sha, branch="main", committer=NotSet, author=NotSet)
+# Attempt using requests to get the file from the repo
+gitHubResponse=repo.update_file(fileInfo.path,"updated by prog", newContents,fileInfo.sha) print (gitHubResponse) 
 
 '''
 filename = 'assign4story.json'
