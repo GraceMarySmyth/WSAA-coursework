@@ -1,8 +1,13 @@
 # Removed unused imports
 import requests
 from github import Github
-from config import config as cfg
 
+# Import the config module
+try:
+    from config import config as cfg
+except ImportError:
+    print("Error: Could not import 'config'. Ensure the 'config.py' file exists and contains a 'config' dictionary.")
+    exit(1)
 
 '''
 # install on command line
@@ -24,18 +29,14 @@ response = requests.get(urlOfFile)
 contentOfFile = response.text 
 print (contentOfFile)
 
-newContents = contentOfFile .replace('Andrew', 'Grace')
+newContents = contentOfFile.replace('Andrew', 'Grace')
 newContents = newContents.replace('he', 'she') 
 newContents = newContents.replace('his', 'her')
 newContents = newContents.replace('him', 'her')
 
-
 # Update the file in the repository
-repo.update_file(fileInfo.path, "Updated file with new name", newContents, fileInfo.sha, branch="main", committer=None, author=None)
-# Attempt using requests to get the file from the repo
-gitHubResponse=repo.update_file(fileInfo.path,"updated by prog", newContents,fileInfo.sha) 
-repo.update_file(fileInfo.path, "Updated file with new name", newContents, fileInfo.sha, branch="main", committer=None, author=None)
-print (gitHubResponse) 
+gitHubResponse = repo.update_file(fileInfo.path, "Updated file with new name", newContents, fileInfo.sha, branch="main")
+print(gitHubResponse)
 
 '''
 filename = 'assign4story.json'
