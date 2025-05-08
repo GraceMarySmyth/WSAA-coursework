@@ -1,30 +1,89 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    meal_type = db.Column(db.String(50))
+    ingredients_count = db.Column(db.Integer)
+    time = db.Column(db.String(50))
+    method = db.Column(db.Text)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "meal_type": self.meal_type,
+            "ingredients_count": self.ingredients_count,
+            "ingredients_list": self.ingredients_list,
+            "time": self.time,
+            "method": self.method
+        }
+    
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+
 
 @app.route('/')
 def index():
-    return "hello mum"
+    return "Welcome to the Smyth Family Recipe API!"
 
-@app.route("/inquery")
-def inquery():
-    name = request.args["name"]
-    return request.args
+#get all recipes
+@app.route("/recipes", methods=["GET"])
+def get_recipes():
+    recipes = Recipe.query.all()
+    return jsonify([recipe.to_dict() for recipe in recipes])
 
-@app.route("/inbody", methods=["POST"])
-def inbody():
-    name = request.json["name"]
-    age = request.json["age"]
-    #print (request.json)
-    return f"you are {name} and aged {age} {type(age)}"
+#get one recipe
+@app.route("/recipes/<int:id>", methods=["GET"])
+def get_recipe(id):
+    recipe = Recipe.query.get_or_404(id)
+    return jsonify(recipe.to_dict())
 
-@app.route('/user')
-def getuser():
-    user={
-        'name': "andrew",
-        'age' : 21
-    }
-    return jsonify(user)
+#add a recipe/post a recipe
+@app.route("/recipes", methods=["POST"])
+def add_recipe():
+    data = request.get_json()
+    new_recipe = Recipe(
+        name=data["recipe_name"],
+        meal_type=data["meal_type"],
+        ingredients_count=data["ingredients_count"],
+        ingredients_list=data["ingredients_list"],
+        time=data["time"],
+        method=data["method"]
+    )
+    db.session.add(new_recipe)
+    db.session.commit() # This will save the new recipe to the database
+    return jsonify(new_recipe.to_dict()), 201
+
+# PUT update existing recipe
+@app.route('/recipes/<int:recipe_id>', methods=['PUT'])
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    data = request.get_json()
+    recipe.name = data['name']
+    recipe.meal_type = data['meal_type']
+    recipe.ingredients_count = data['ingredients_count']
+    recipe.time = data['time']
+    recipe.method = data['method']
+    db.session.commit()
+    return jsonify(recipe.to_dict())
+
+# DELETE a recipe
+@app.route('/recipes/<int:recipe_id>', methods=['DELETE'])
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    db.session.delete(recipe)
+    db.session.commit()
+    return jsonify({"message": "Recipe deleted"})
+
 
 if __name__ == "__main__":
     app.run(debug = True)
