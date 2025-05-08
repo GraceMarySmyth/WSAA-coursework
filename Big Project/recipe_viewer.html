@@ -1,27 +1,119 @@
 <html>
     <head>
-        <title>View books</title>
+        <title>Smyth Family Recipes</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #ec0909; /* red */
+                margin: 0;
+                padding: 20px;
+            }
+            h1 {
+                color: #333;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #d366b2; /* pink */
+            }
+            button {
+                background-color: #3ebee6; /* blue */
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #3922a1; /* dark blue */
+            }
+        </style>
     </head>
     <body>
-        <h1>Books</h1>
-        <div><button>Create a book</button><br/><br/></div>
+        <h1>Smyth Family Recipes</h1>
+
+        <h2>Welcome to the recipe viewer</h2>
+
+        <p>Here you can view, create, update, and delete recipes.</p>   
+        <p>Click the button below to create a new recipe.</p>
+        <p>Click the button below to view all recipes.</p>  
+        <p>Click the button below to update a recipe.</p>
+        <p>Click the button below to delete a recipe.</p>
+        <p>Click the button below to view a recipe.</p>
+        <p>Click the button below to view a recipe by id.</p>
+        <p>Click the button below to view a recipe by name.</p>
+        <p>Click the button below to view a recipe by meal type.</p>
+        <p>Click the button below to view a recipe by number of ingredients.</p>
+        <p>Click the button below to view a recipe by time.</p>
+        
         <div>
+            <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
+        </div>
+        
+        <div>
+            <table id=" RecipeTable"
             <table border="1">
-                <tr>
+                <thead>
+                    <tr>
                         <th>id</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Price</th>
+                        <th>Name of recipe</th>
+                        <th>Meal type</th>
+                        <th>Number of Ingredients</th>
+                        <th>Ingredient List</th>
+                        <th>Time</th>
+                        <th>Method</th>
                         <th>Update</th>
                         <th>Delete</th>
-                </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Banana Bread</td>
+                        <td>Snack</td>
+                        <td>8</td>
+                        <td>3-4 ripe Bananas, 
+                            340g flour, 
+                            170g sugar, 
+                            70g dairy free butter, 
+                            1 egg, 
+                            1 tbs baking powder, 
+                            pinch of salt, 
+                            1 tbsp vanilla</td>
+                        <td>1 hour 10mins</td>
+                        <td>1. Preheat oven to 175 
+                            2. Mix the butter and Bananas
+                            3. mix the sugar egg and vanilla.
+                            4. Add the salt, baking powder and flour and mix well.
+                            5. Pour into a loaf tin and bake for 1 hour.
+                            6. Leave to cool for 10 mins before removing from the tin.
+                        </td>
+                        <td><button onclick="editRecipe(1)">update</button></td>
+                        <td><button onclick="deleteRecipe(1)">delete</button></td>
+                    </tr>
+                </tbody>    
+            </table>
+        </div>  
                 <tr>
                     <td>1</td>
-                    <td>Harry Potter does something</td>
-                    <td>JK Rowling</td>
-                    <td>12</td>
-                    <td><button>update</button></td>
-                    <td><button>delete</button></td>
+                    <td>Banana Bread</td>
+                    <td>Snack</td>
+                    <td>8</td>
+                    <td>1 hour 10mins</td>
+                    <td>Mix, bake, eat (to be updated)</td>
+                    <td><button onclick="editRecipe(1)">update</button></td>
+                    <td><button onclick="deleteRecipe(1)">delete</button></td>
                    
             </tr>
 
@@ -32,13 +124,15 @@
             <!-- spans are like divs but do not go onto a new line -->
             <h2><span>Create a</span> <span style="display:none">Update this</span> Book</h2>
             id <input type="text" name="id"><br/>
-            Title <input type="text" name="title"><br/>
-            Author <input type="text" name="author"><br/>
-            Price <input type="number" name="price"><br/>
+            Name of recipe <input type="text" name="Name of Recipe"><br/>
+            Meal type <input type="text" name="Meal type"><br/>
+            Number of Ingredients <input type="number" name="Number of Ingredients"><br/>
+            Time <input type="text" name="Time"><br/>
+            Method <input type="text" name="description"><br/>
             Just to show select <select name="status">
-                <option value="instock">in stock</option>
-                <option value="outstock">out of stock</option>
-                <option value="other">out of print</option>
+                <option value="Easy">in stock</option>
+                <option value="Moderate">out of stock</option>
+                <option value="Difficult">out of print</option>
             </select><br/>
             <span><button>Create</button></span>
  			<span><button style="display:none">Update</button></span>
