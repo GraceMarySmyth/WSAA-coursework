@@ -110,6 +110,7 @@
                     <td>Banana Bread</td>
                     <td>Snack</td>
                     <td>8</td>
+                    <td>List ingredients</td>
                     <td>1 hour 10mins</td>
                     <td>Mix, bake, eat (to be updated)</td>
                     <td><button onclick="editRecipe(1)">update</button></td>
@@ -120,25 +121,40 @@
         </table>
         <br/>
         </div>
-        <div>
-            <!-- spans are like divs but do not go onto a new line -->
-            <h2><span>Create a</span> <span style="display:none">Update this</span> Book</h2>
-            id <input type="text" name="id"><br/>
-            Name of recipe <input type="text" name="Name of Recipe"><br/>
-            Meal type <input type="text" name="Meal type"><br/>
-            Number of Ingredients <input type="number" name="Number of Ingredients"><br/>
-            Time <input type="text" name="Time"><br/>
-            Method <input type="text" name="description"><br/>
-            Just to show select <select name="status">
-                <option value="Easy">in stock</option>
-                <option value="Moderate">out of stock</option>
-                <option value="Difficult">out of print</option>
-            </select><br/>
-            <span><button>Create</button></span>
- 			<span><button style="display:none">Update</button></span>
-             <!-- "display:none" will make it hidden-->
+        <div id="createForm"></div>
+            <h2 id="formTitle">Create a Recipe</h2>
+            <form id="recipeForm" onsubmit="return saveRecipe()">
+                <input type="hidden" id="recipeId" name="id">
+                
+                <label>Name of Recipe:</label><br/>
+                <input type="text" id="recipeName" required><br/>
+    
+                <label>Meal Type:</label><br/>
+                <input type="text" id="mealType" required><br/>
+    
+                <label>Number of Ingredients:</label><br/>
+                <input type="number" id="ingredientCount" required><br/>
+    
+                <label>Ingredient List:</label><br/>
+                <input type="text" id="ingredientList" required><br/>
 
-
+                <label>Time:</label><br/>
+                <input type="text" id="recipeTime" required><br/>
+    
+                <label>Method:</label><br/>
+                <textarea id="recipeMethod" required></textarea><br/>
+    
+                <label>Difficulty (for example only):</label><br/>
+                <select id="difficulty">
+                    <option value="Easy">Easy Recipe</option>
+                    <option value="Moderate">Some skills required</option>
+                    <option value="Difficult">Time and skills required</option>
+                </select><br/><br/>               
+                
+                
+            
+                <button type="submit">Save Recipe</button>
+            </form>    
         </div>
         
     </body>
