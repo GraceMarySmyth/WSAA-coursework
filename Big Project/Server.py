@@ -26,11 +26,6 @@ class Recipe(db.Model):
             "method": self.method
         }
     
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
-
 
 @app.route('/')
 def index():
@@ -87,4 +82,6 @@ def delete_recipe(recipe_id):
 
 
 if __name__ == "__main__":
+   with app.app_context():
+        db.create_all()   
     app.run(debug = True)
