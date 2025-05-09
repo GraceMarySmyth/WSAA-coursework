@@ -26,10 +26,11 @@ class Recipe(db.Model):
             "method": self.method
         }
     
-
+#mapping the root URL to a function
+# This function will be called when the root URL is accessed
 @app.route('/')
 def index():
-    return "Welcome to the Smyth Family Recipe API!"
+    return "<h1>Welcome to the Smyth Family Recipe API!</h1>"
 
 #get all recipes
 @app.route("/recipes", methods=["GET"])
