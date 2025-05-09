@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(Smyth_Family_Recipes)
+app = Flask("Smyth_Family_Recipes")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -11,6 +11,7 @@ class Recipe(db.Model):
     name = db.Column(db.String(100), nullable=False)
     meal_type = db.Column(db.String(50))
     ingredients_count = db.Column(db.Integer)
+    ingredients_list = db.Column(db.Text)
     time = db.Column(db.String(50))
     method = db.Column(db.Text)
 
@@ -52,7 +53,7 @@ def get_recipe(id):
 def add_recipe():
     data = request.get_json()
     new_recipe = Recipe(
-        name=data["recipe_name"],
+        name=data["name"],
         meal_type=data["meal_type"],
         ingredients_count=data["ingredients_count"],
         ingredients_list=data["ingredients_list"],
