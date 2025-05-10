@@ -30,8 +30,11 @@ This is a list of all files and directories which are unnecessary to the project
 requirements.txt.
 this file contains all the files and version numbers required to run the programme. pip freeze > requirements.txt was the command used to generate this file.
 
-RecipeDAO.py
+Server.py
+This is where Flask was used to create an app server.  
 
+RecipeDAO.py
+"Data Access Object" 
 Server.py
 
 recipe_viewer.html
@@ -41,5 +44,15 @@ References:
 
 initial code from:
 https://github.com/andrewbeattycourseware/WSAA-Courseware
+
+https://flask.palletsprojects.com/en/stable/quickstart/
+
+https://flask.palletsprojects.com/en/stable/quickstart/#routing
+
+https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode
+
+https://www.geeksforgeeks.org/use-jsonify-instead-of-json-dumps-in-flask/
+
+https://medium.com/@sujathamudadla1213/jsonify-method-in-flask-ecfa5e483c29
 
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
