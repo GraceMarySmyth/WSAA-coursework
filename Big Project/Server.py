@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from recipeDAO import recipeDAO
 
 app = Flask("Smyth_Family_Recipes")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'

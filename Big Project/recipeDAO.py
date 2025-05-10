@@ -27,7 +27,8 @@ class recipeDAO:
     def closeAll(self):
         self.connection.close()
         self.cursor.close()
-         
+
+ # get all recipes   
     def getAll(self):
         cursor = self.getcursor()
         sql="select * from recipes"
@@ -42,6 +43,7 @@ class recipeDAO:
         self.closeAll()
         return returnArray
 
+# get one recipe by id as a dict
     def findByID(self, id):
         cursor = self.getcursor()
         sql="select * from recipes where id = %s"
@@ -53,6 +55,7 @@ class recipeDAO:
         self.closeAll()
         return returnvalue
 
+#the recipe just created as a dict
     def create(self, recipe):
         cursor = self.getcursor()
         sql="insert into recipes (name, meal_type, ingredients_count, ingredients_list, time, method) values (%s,%s,%s)"
@@ -65,7 +68,7 @@ class recipeDAO:
         self.closeAll()
         return recipe
 
-
+# update a recipe by id as a dict
     def update(self, id, recipes):
         cursor = self.getcursor()
         sql="update recipes set name= %s, meal_type=%s, ingredient_count=%s, ingredient_list=%s, time=%s, method=%s  where id = %s"
@@ -74,6 +77,8 @@ class recipeDAO:
         self.connection.commit()
         self.closeAll()
         
+
+# delete a recipe by id. True or False
     def delete(self, id):
         cursor = self.getcursor()
         sql="delete from recipes where id = %s"
