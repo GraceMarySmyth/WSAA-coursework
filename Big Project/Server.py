@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.types import time
+from sqlalchemy.types import Time
 from sqlalchemy.sql import text
 from recipeDAO import recipe_DAO
 
