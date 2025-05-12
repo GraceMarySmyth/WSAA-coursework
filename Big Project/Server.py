@@ -23,7 +23,7 @@ class Recipe(db.Model):
     meal_type = db.Column(db.String(50))
     ingredients_count = db.Column(db.Integer)
     ingredients_list = db.Column(db.Text)
-    time = db.Column(time))
+    time = db.Column(time)
     method = db.Column(db.Text)
 
     def to_dict(self):
