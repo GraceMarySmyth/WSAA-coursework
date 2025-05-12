@@ -12,7 +12,7 @@ from flask import make_response
 # Create a Flask application instance
 # This is the main entry point for the application
 app = Flask("Smyth_Family_Recipes")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:root@localhost/smyth_family_recipes'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/smyth_family_recipes'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
