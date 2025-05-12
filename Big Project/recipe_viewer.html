@@ -62,8 +62,7 @@
         </div>
         
         <div>
-            <table id=" RecipeTable"
-            <table border="1">
+            <table id="RecipeTable" border="1">
                 <thead>
                     <tr>
                         <th>id</th>
@@ -103,23 +102,8 @@
                         <td><button onclick="deleteRecipe(1)">delete</button></td>
                     </tr>
                 </tbody>    
-            </table>
-        </div>  
-                <tr>
-                    <td>1</td>
-                    <td>Banana Bread</td>
-                    <td>Snack</td>
-                    <td>8</td>
-                    <td>List ingredients</td>
-                    <td>1 hour 10mins</td>
-                    <td>Mix, bake, eat (to be updated)</td>
-                    <td><button onclick="editRecipe(1)">update</button></td>
-                    <td><button onclick="deleteRecipe(1)">delete</button></td>
-                   
-            </tr>
-
+        </tbody>    
         </table>
-        <br/>
         </div>
         <div id="createForm"></div>
             <h2 id="formTitle">Create a Recipe</h2>
@@ -156,6 +140,70 @@
                 <button type="submit">Save Recipe</button>
             </form>    
         </div>
-        
+        <script>
+            function showCreateForm() {
+                document.getElementById("createForm").style.display = "block";
+            }
+            
+            function saveRecipe() {
+                const data = {
+                    name: document.getElementById("recipeName").value,
+                    meal_type: document.getElementById("mealType").value,
+                    ingredients_count: parseInt(document.getElementById("ingredientCount").value),
+                    ingredients_list: document.getElementById("ingredientList").value,
+                    time: document.getElementById("recipeTime").value,
+                    method: document.getElementById("recipeMethod").value
+                };
+            
+                fetch("http://localhost:5000/recipes", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (response.ok) {
+                        alert("Recipe added successfully!");
+                        location.reload();  // Reload to show the updated recipe list
+                    } else {
+                        alert("Failed to add recipe.");
+                    }
+                });
+            
+                return false; // prevent default form submission
+            }
+            </script>
+            <script>
+                function editRecipe(id) {
+                    // Fetch the recipe data and populate the form for editing
+                    fetch(`http://localhost:5000/recipes/${id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById("recipeId").value = data.id;
+                            document.getElementById("recipeName").value = data.name;
+                            document.getElementById("mealType").value = data.meal_type;
+                            document.getElementById("ingredientCount").value = data.ingredients_count;
+                            document.getElementById("ingredientList").value = data.ingredients_list;
+                            document.getElementById("recipeTime").value = data.time;
+                            document.getElementById("recipeMethod").value = data.method;
+                            
+                            // Show the form for editing
+                            showCreateForm();
+                        });
+                }
+            
+                function deleteRecipe(id) {
+                    fetch(`http://localhost:5000/recipes/${id}`, {
+                        method: "DELETE"
+                    }).then(response => {
+                        if (response.ok) {
+                            alert("Recipe deleted successfully!");
+                            location.reload();  // Reload to show the updated recipe list
+                        } else {
+                            alert("Failed to delete recipe.");
+                        }
+                    });
+                }              
+            </script>
     </body>
 </html>
