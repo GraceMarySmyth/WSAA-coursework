@@ -31,13 +31,13 @@ requirements.txt.
 this file contains all the files and version numbers required to run the programme. pip freeze > requirements.txt was the command used to generate this file.
 
 Server.py
-This is where Flask was used to create an app server.  
+This is where Flask was used to create an app server. The flask API is for frontend/backend interactions 
 
 RecipeDAO.py
-"Data Access Object" It is used to separate database logic from the rest of the app. This allows a clearer interaction with the MySQL databse that holds the recipe data.
+"Data Access Object" It is used to separate database logic from the rest of the app. This allows a clearer interaction with the MySQL databse that holds the recipe data. This handles raw SQL database operations
 
 sql.py
-This programme loads the data directly from a SQL database. It configures how the SQL connection and query work using "sqlConfig" and implements how to read and convert the query results into the dataset. 
+This programme loads the data directly from a SQL database. It configures how the SQL connection and query work using "sqlConfig" and implements how to read and convert the query results into the dataset. this is the custom loader for datasets (used for data science, analysis, etc.)
 
 recipe_viewer.html
 
