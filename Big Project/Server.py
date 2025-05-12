@@ -4,6 +4,13 @@ from sqlalchemy import time
 from sqlalchemy.sql import text
 from recipeDAO import recipe_DAO
 
+# Imports to support users downloading the recipes as either a CSV or JSON file
+import csv
+import io
+from flask import make_response
+
+# Create a Flask application instance
+# This is the main entry point for the application
 app = Flask("Smyth_Family_Recipes")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/smyth_family_recipes'
 
@@ -85,6 +92,30 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return jsonify({"message": "Recipe deleted"})
 
+# Export recipes as JSON or CSV
+@app.route("/recipes/export/<string:format>", methods=["GET"])
+def export_recipes(format):
+    recipes = recipe_dao.getAll()
+
+    if format == "json":
+        return jsonify(recipes)
+
+    elif format == "csv":
+        # Create in-memory CSV
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=recipes[0].keys())
+        writer.writeheader()
+        writer.writerows(recipes)
+        output.seek(0)
+
+        # Send as CSV download
+        response = make_response(output.getvalue())
+        response.headers["Content-Disposition"] = "attachment; filename=recipes.csv"
+        response.headers["Content-type"] = "text/csv"
+        return response
+
+    else:
+        return jsonify({"error": "Unsupported export format. Use 'json' or 'csv'."}), 400
 
 if __name__ == "__main__":
     with app.app_context():
