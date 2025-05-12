@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import time
+from sqlalchemy.sql import text
 from recipeDAO import recipeDAO
 
 app = Flask("Smyth_Family_Recipes")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/smyth_family_recipes'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -13,7 +16,7 @@ class Recipe(db.Model):
     meal_type = db.Column(db.String(50))
     ingredients_count = db.Column(db.Integer)
     ingredients_list = db.Column(db.Text)
-    time = db.Column(db.String(50))
+    time = db.Column(time))
     method = db.Column(db.Text)
 
     def to_dict(self):

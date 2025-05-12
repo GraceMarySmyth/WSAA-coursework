@@ -3,10 +3,10 @@ import dbconfig as cfg
 class recipeDAO:
     connection=""
     cursor =''
-    host=       ''
-    user=       ''
+    host=       'localhost'
+    user=       'root'
     password=   ''
-    database=   ''
+    database=   'smyth_family_recipes'
     
     def __init__(self):
         self.host=       cfg.mysql['host']
@@ -59,7 +59,7 @@ class recipeDAO:
     def create(self, recipe):
         cursor = self.getcursor()
         sql="insert into recipes (name, meal_type, ingredients_count, ingredients_list, time, method) values (%s,%s,%s)"
-        values = (book.get("name"), book.get("meal_type"), book.get("ingredients_count"), book.get("ingredients_list"), book.get("time"), book.get("method"))
+        values = (recipe.get("name"), recipe.get("meal_type"), recipe.get("ingredients_count"), recipe.get("ingredients_list"), recipe.get("time"), recipe.get("method"))
         cursor.execute(sql, values)
 
         self.connection.commit()
