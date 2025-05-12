@@ -59,4 +59,8 @@ https://medium.com/@sujathamudadla1213/jsonify-method-in-flask-ecfa5e483c29
 
 http://docs.sqlalchemy.org/en/latest/faq/sqlexpressions.html
 
+https://docs.sqlalchemy.org/en/20/errors.html#error-e3q8
+
+https://docs.sqlalchemy.org/en/20/core/pooling.html#pool-disconnects
+
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
