@@ -34,8 +34,10 @@ Server.py
 This is where Flask was used to create an app server.  
 
 RecipeDAO.py
-"Data Access Object" 
-Server.py
+"Data Access Object" It is used to separate database logic from the rest of the app. This allows a clearer interaction with the MySQL databse that holds the recipe data.
+
+sql.py
+This programme loads the data directly from a SQL database. It configures how the SQL connection and query work using "sqlConfig" and implements how to read and convert the query results into the dataset. 
 
 recipe_viewer.html
 
@@ -54,5 +56,7 @@ https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode
 https://www.geeksforgeeks.org/use-jsonify-instead-of-json-dumps-in-flask/
 
 https://medium.com/@sujathamudadla1213/jsonify-method-in-flask-ecfa5e483c29
+
+http://docs.sqlalchemy.org/en/latest/faq/sqlexpressions.html
 
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
