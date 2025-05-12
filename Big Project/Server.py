@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import time
 from sqlalchemy.sql import text
-from recipeDAO import recipeDAO
+from recipeDAO import recipe_DAO
 
 app = Flask("Smyth_Family_Recipes")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/smyth_family_recipes'
