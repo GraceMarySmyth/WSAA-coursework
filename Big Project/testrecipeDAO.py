@@ -1,4 +1,4 @@
-from recipeDAO import recipe_DAO
+from recipeDAO import recipe_dao
 
 recipe = {
     "name": "Banana Bread",
@@ -25,7 +25,7 @@ recipe = recipe_DAO.create(recipe)
 recipe_id = recipe["id"]
 
 #find by id
-result = recipe_DAO.find_by_id(recipe_id)
+result = recipe_DAO.findById(recipe_id)
 print ("test create and find by id")
 print (result)
 
@@ -41,8 +41,8 @@ newrecipevalue = {
                             1 tbs baking powder, 
                             pinch of salt, 
                             1 tbsp vanilla,
-                            100g walnuts"""
-"time": "1 hour 20 minutes"
+                            100g walnuts""",
+"time": "1 hour 20 minutes",
 "method": """1. Preheat oven to 175°C.
                  2. Mix the butter and Bananas.
                  3. Mix the sugar, egg, and vanilla.
@@ -55,7 +55,7 @@ print(result)
 
 #get all
 print("test get all")
-all_recipes = recipe_DAO.get_all()
+all_recipes = recipe_DAO.getAall()
 for recipe in all_recipes:
     print(recipe)
 
