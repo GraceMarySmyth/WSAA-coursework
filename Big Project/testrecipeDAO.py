@@ -33,7 +33,7 @@ print("Created with ID: ", recipes_id)
 
 #find by id
 print("\n Finding the recipe by ID")
-result = recipe_dao.findById(recipes_id)
+result = recipe_dao.findByID(recipes_id)
 print ("Found recipe:")
 print (result)
 
