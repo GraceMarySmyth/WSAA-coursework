@@ -1,4 +1,5 @@
-import mysql.connector
+'''import mysql.connector'''
+import pymysql
 import dbconfig as cfg
 class recipeDAO:
     connection=""
@@ -19,7 +20,7 @@ class recipeDAO:
     def getcursor(self): 
         try:
             print("Connecting to database...")
-            self.connection = mysql.connector.connect(
+            self.connection = pymysql.connect(
             host=       self.host,
             user=       self.user,
             password=   self.password,
