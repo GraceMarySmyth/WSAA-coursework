@@ -1,5 +1,5 @@
 import mysql.connector
-from dbconfig import mysql, dbcreds
+from dbconfig import mysql as dbcreds
 
 print("🔧 Attempting direct MySQL connection...")
 
@@ -18,4 +18,3 @@ try:
     conn.close()
 except Exception as e:
     print("❌ Connection failed:", e)
-    
