@@ -65,7 +65,11 @@ class recipeDAO:
         self.connection.commit()
         recipe["id"] = cursor.lastrowid
         self.closeAll()
+        print("Insert successful")
         return recipe
+    except Exception as e:
+        print("Error inserting recipe:", e)
+        return {"error": "Failed to insert recipe"}
 
 # update a recipe by id as a dict
     def update(self, id, recipe):
