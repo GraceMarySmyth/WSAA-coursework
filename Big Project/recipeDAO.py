@@ -60,6 +60,7 @@ class recipeDAO:
             recipe.get("time"),
             recipe.get("method")
         )
+        print("Inserting:", values)
         cursor.execute(sql, values)
         self.connection.commit()
         recipe["id"] = cursor.lastrowid
