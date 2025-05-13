@@ -50,26 +50,27 @@ class recipeDAO:
 
 #the recipe just created as a dict
     def create(self, recipe):
-        cursor = self.getcursor()
-        sql = "INSERT INTO recipes (name, meal_type, ingredients_count, ingredients_list, time, method) VALUES (%s, %s, %s, %s, %s, %s)"
-        values = (
-            recipe.get("name"),
-            recipe.get("meal_type"),
-            recipe.get("ingredients_count"),
-            recipe.get("ingredients_list"),
-            recipe.get("time"),
-            recipe.get("method")
-        )
-        print("Inserting:", values)
-        cursor.execute(sql, values)
-        self.connection.commit()
-        recipe["id"] = cursor.lastrowid
-        self.closeAll()
-        print("Insert successful")
-        return recipe
-    except Exception as e:
-        print("Error inserting recipe:", e)
-        return {"error": "Failed to insert recipe"}
+        try:
+            cursor = self.getcursor()
+            sql = "INSERT INTO recipes (name, meal_type, ingredients_count, ingredients_list, time, method) VALUES (%s, %s, %s, %s, %s, %s)"
+            values = (
+                recipe.get("name"),
+                recipe.get("meal_type"),
+                recipe.get("ingredients_count"),
+                recipe.get("ingredients_list"),
+                recipe.get("time"),
+                recipe.get("method")
+            )
+            print("Inserting:", values)
+            cursor.execute(sql, values)
+            self.connection.commit()
+            recipe["id"] = cursor.lastrowid
+            self.closeAll()
+            print("Insert successful")
+            return recipe
+        except Exception as e:
+            print("Error inserting recipe:", e)
+            return {"error": "Failed to insert recipe"}
 
 # update a recipe by id as a dict
     def update(self, id, recipe):
