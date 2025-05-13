@@ -1,4 +1,4 @@
-from recipeDAO import recipe_DAO
+from recipeDAO import recipe_dao
 
 
 print("test recipeDAO")
@@ -25,7 +25,7 @@ recipes = {
                  6. Leave to cool for 10 mins before removing from the tin."""
 }
 # create a new recipe
-print("\n Creating a new recipe")
+print("\n Creating a new recipe", values)
 recipe = recipe_DAO.create(recipes)
 recipes_id = recipe["id"]
 print("Created with ID: ", recipes_id)
@@ -58,9 +58,10 @@ new_recipes_value = {
                  5. Pour into a loaf tin and bake for 1 hour.
                  6. Leave to cool for 10 mins before removing from the tin."""}
 print("\n Updating the recipe")
-recipe_DAO.update(recipes_id, newrecipesvalue)
-print("Recipe updated")
+recipe_DAO.update(recipes_id, new_recipes_value)
+print("Recipe updated", id)
 print(result)
+print("🔧 With values:", values)
 
 #get all
 print("\n get all Recipes")
@@ -70,5 +71,5 @@ for recipes in all_recipes:
 
 #delete
 # recipe_DAO.delete(recipes_id)
-
+# print("Deleting recipe ID:", id)
 print("\n Test complete")

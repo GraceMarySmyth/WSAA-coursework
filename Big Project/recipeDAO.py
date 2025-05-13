@@ -101,4 +101,4 @@ class recipeDAO:
         return dict(zip(keys, resultLine))
 
         
-recipe_DAO = recipeDAO()
+recipe_dao = recipeDAO()
