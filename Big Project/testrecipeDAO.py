@@ -26,7 +26,7 @@ recipes = {
 }
 # create a new recipe
 print("\n Creating a new recipe")
-recipe = recipe_DAO.create(recipes)
+recipe = recipe_dao.create(recipes)
 recipes_id = recipe["id"]
 print("Created with ID: ", recipes_id)
 
@@ -65,11 +65,11 @@ print("🔧 With values:")
 
 #get all
 print("\n get all Recipes")
-all_recipes = recipe_DAO.getAall()
+all_recipes = recipe_dao.getAall()
 for recipes in all_recipes:
     print(recipes)
 
 #delete
-# recipe_DAO.delete(recipes_id)
+# recipe_dao.delete(recipes_id)
 # print("Deleting recipe ID:", id)
 print("\n Test complete")
