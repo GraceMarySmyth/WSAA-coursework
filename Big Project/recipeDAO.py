@@ -51,8 +51,7 @@ class recipeDAO:
 #the recipe just created as a dict
     def create(self, recipe):
         cursor = self.getcursor()
-        sql = """INSERT INTO recipes (name, meal_type, ingredients_count, ingredients_list, time, method)
-                 VALUES (%s, %s, %s, %s, %s, %s)"""
+        sql = "INSERT INTO recipes (name, meal_type, ingredients_count, ingredients_list, time, method) VALUES (%s, %s, %s, %s, %s, %s)"
         values = (
             recipe.get("name"),
             recipe.get("meal_type"),
