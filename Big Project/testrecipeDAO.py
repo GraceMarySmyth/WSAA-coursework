@@ -1,4 +1,4 @@
-from recipeDAO import recipe_dao
+from recipeDAO import recipe_DAO
 
 recipe = {
     "name": "Banana Bread",
