@@ -65,7 +65,7 @@ print("🔧 With values:")
 
 #get all
 print("\n get all Recipes")
-all_recipes = recipe_dao.getAall()
+all_recipes = recipe_dao.getAll()
 for recipes in all_recipes:
     print(recipes)
 
