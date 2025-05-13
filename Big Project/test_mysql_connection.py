@@ -1,6 +1,7 @@
 import mysql.connector
+import pymysql
 from dbconfig import mysql as dbcreds
-
+'''
 print("🔧 Attempting direct MySQL connection...")
 
 try:
@@ -18,3 +19,12 @@ try:
     conn.close()
 except Exception as e:
     print("❌ Connection failed:", e)
+    '''
+conn = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='',
+    database='smyth_family_recipes'
+)
+print("✅ Connected to MySQL using PyMySQL!")
+conn.close()
