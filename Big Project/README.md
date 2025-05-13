@@ -63,4 +63,14 @@ https://docs.sqlalchemy.org/en/20/errors.html#error-e3q8
 
 https://docs.sqlalchemy.org/en/20/core/pooling.html#pool-disconnects
 
+https://packaging.python.org/en/latest/tutorials/installing-packages/
+
+https://support.microsoft.com/en-us/office/import-or-link-to-data-in-an-sql-server-database-a5a3b4eb-57b9-45a0-b732-77bc6089b84e
+
+https://docs.buildbot.net/latest/manual/configuration/dbconfig.html
+
+https://www.digitalocean.com/community/tutorials/how-to-import-and-export-databases-in-mysql-or-mariadb
+
+https://stackoverflow.com/questions/42906665/import-my-database-connection-with-python
+
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color

@@ -17,4 +17,4 @@ try:
         print("📦 Found table:", table[0])
     conn.close()
 except Exception as e:
-    print("❌ Connection failed:", e)
+    print("❌ Connection failed:", e)""
