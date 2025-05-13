@@ -1,5 +1,9 @@
 from recipeDAO import recipe_DAO
 
+
+print("test recipeDAO")
+# This is a test script for the recipeDAO class, which interacts with a MySQL database to manage recipes.
+
 recipes = {
     "name": "Banana Bread",
     "meal_type": "Snack",
@@ -20,17 +24,21 @@ recipes = {
                  5. Pour into a loaf tin and bake for 1 hour.
                  6. Leave to cool for 10 mins before removing from the tin."""
 }
-#create
+# create a new recipe
+print("\n Creating a new recipe")
 recipe = recipe_DAO.create(recipes)
-recipes_id = recipes["id"]
+recipes_id = recipe["id"]
+print("Created with ID: ", recipes_id)
+
 
 #find by id
+print("\n Finding the recipe by ID")
 result = recipe_DAO.findById(recipes_id)
-print ("test create and find by id")
+print ("Found recipe:")
 print (result)
 
 #update
-newrecipesvalue = {
+new_recipes_value = {
     "name": "Banana Bread with Walnuts",
     "ingredients_count": 9,
     "ingredients_list": """3-4 ripe Bananas, 
@@ -49,15 +57,18 @@ newrecipesvalue = {
                  4. Add the salt, baking powder, flour and walnuts and mix well.
                  5. Pour into a loaf tin and bake for 1 hour.
                  6. Leave to cool for 10 mins before removing from the tin."""}
+print("\n Updating the recipe")
 recipe_DAO.update(recipes_id, newrecipesvalue)
-print("test update")
+print("Recipe updated")
 print(result)
 
 #get all
-print("test get all")
+print("\n get all Recipes")
 all_recipes = recipe_DAO.getAall()
 for recipes in all_recipes:
     print(recipes)
 
 #delete
 # recipe_DAO.delete(recipes_id)
+
+print("\n Test complete")
