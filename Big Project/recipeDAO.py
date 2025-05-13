@@ -49,6 +49,7 @@ class recipeDAO:
         return self.convertToDictionary(result) if result else {}
 
 #the recipe just created as a dict
+    print("ENTERED create()") 
     def create(self, recipe):
         try:
             cursor = self.getcursor()
@@ -65,8 +66,8 @@ class recipeDAO:
             cursor.execute(sql, values)
             self.connection.commit()
             recipe["id"] = cursor.lastrowid
+            print("Insert successful, ID:", recipe["id"])
             self.closeAll()
-            print("Insert successful")
             return recipe
         except Exception as e:
             print("Error inserting recipe:", e)
