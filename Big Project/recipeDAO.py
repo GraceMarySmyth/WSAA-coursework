@@ -17,14 +17,20 @@ class recipeDAO:
         self.cursor = None
 # get a cursor to the database
     def getcursor(self): 
-        self.connection = mysql.connector.connect(
+        try:
+            print("Connecting to database...")
+            self.connection = mysql.connector.connect(
             host=       self.host,
             user=       self.user,
             password=   self.password,
             database=   self.database,
         )
-        self.cursor = self.connection.cursor()
-        return self.cursor
+            self.cursor = self.connection.cursor()
+            print("Connected to database")
+            return self.cursor
+        except Exception as e:
+            print("Error connecting to database:", e)
+            return None
 
 # close the connection and cursor- for cleanup and avoiding leaks.
     def closeAll(self):
