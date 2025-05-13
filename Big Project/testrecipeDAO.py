@@ -58,7 +58,7 @@ new_recipes_value = {
                  5. Pour into a loaf tin and bake for 1 hour.
                  6. Leave to cool for 10 mins before removing from the tin."""}
 print("\n Updating the recipe")
-recipe_DAO.update(recipes_id, new_recipes_value)
+recipe_dao.update(recipes_id, new_recipes_value)
 print("Recipe updated", id)
 print(result)
 print("🔧 With values:")
