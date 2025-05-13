@@ -1,14 +1,14 @@
 import mysql.connector
-from dbconfig import mysql
+from dbconfig import mysql, dbcreds
 
 print("🔧 Attempting direct MySQL connection...")
 
 try:
     conn = mysql.connector.connect(
-        host=mysql['host'],
-        user=mysql['user'],
-        password=mysql['password'],
-        database=mysql['database']
+        host=dbcreds['host'],
+        user=dbcreds['user'],
+        password=dbcreds['password'],
+        database=dbcreds['database']
     )
     print("✅ Successfully connected to MySQL!")
     cursor = conn.cursor()
