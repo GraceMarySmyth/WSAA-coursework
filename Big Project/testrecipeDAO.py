@@ -25,7 +25,7 @@ recipes = {
                  6. Leave to cool for 10 mins before removing from the tin."""
 }
 # create a new recipe
-print("\n Creating a new recipe", values)
+print("\n Creating a new recipe")
 recipe = recipe_DAO.create(recipes)
 recipes_id = recipe["id"]
 print("Created with ID: ", recipes_id)
@@ -61,7 +61,7 @@ print("\n Updating the recipe")
 recipe_DAO.update(recipes_id, new_recipes_value)
 print("Recipe updated", id)
 print(result)
-print("🔧 With values:", values)
+print("🔧 With values:")
 
 #get all
 print("\n get all Recipes")
