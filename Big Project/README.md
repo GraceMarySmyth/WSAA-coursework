@@ -39,6 +39,15 @@ RecipeDAO.py
 sql.py
 This programme loads the data directly from a SQL database. It configures how the SQL connection and query work using "sqlConfig" and implements how to read and convert the query results into the dataset. this is the custom loader for datasets (used for data science, analysis, etc.)
 
+testrecipeDAO.py
+this is to test the code. It was suggested by chat GPT as i couldnt ge the code to work initially. There was an issue with my-sql-connector-python not working or stalling silently. Swapped to PyMySQL and code worked and output generated.
+
+test_mysql_connection.py
+code to test the connection to MySQL.
+
+dbconfig.py
+configuration file for database
+
 recipe_viewer.html
 
 
@@ -56,6 +65,8 @@ https://flask.palletsprojects.com/en/stable/quickstart/#debug-mode
 https://www.geeksforgeeks.org/use-jsonify-instead-of-json-dumps-in-flask/
 
 https://medium.com/@sujathamudadla1213/jsonify-method-in-flask-ecfa5e483c29
+
+Chat GPT
 
 http://docs.sqlalchemy.org/en/latest/faq/sqlexpressions.html
 
