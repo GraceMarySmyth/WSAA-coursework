@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import Time
 from sqlalchemy.sql import text
-from recipeDAO import recipe_DAO
+from recipeDAO import recipe_dao
 
 # Imports to support users downloading the recipes as either a CSV or JSON file
 import csv
@@ -23,7 +23,7 @@ class Recipe(db.Model):
     meal_type = db.Column(db.String(50))
     ingredients_count = db.Column(db.Integer)
     ingredients_list = db.Column(db.Text)
-    time = db.Column(Time)
+    time = db.Column(db.string(50))
     method = db.Column(db.Text)
 
     def to_dict(self):

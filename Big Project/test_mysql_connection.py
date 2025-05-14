@@ -29,4 +29,4 @@ conn = pymysql.connect(
 print("✅ Connected to MySQL using PyMySQL!")
 conn.close()
 
-# changed to pymysql. mysql-connectorpython is either not working or stalling silently
+# changed to pymysql. mysql-connector-python is either not working or stalling silently

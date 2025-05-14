@@ -56,7 +56,7 @@ class recipeDAO:
         return self.convertToDictionary(result) if result else {}
 
 #the recipe just created as a dict
-    print("ENTERED create()") 
+    '''print("ENTERED create()") '''
     def create(self, recipe):
         try:
             cursor = self.getcursor()
