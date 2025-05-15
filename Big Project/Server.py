@@ -34,7 +34,7 @@ class Recipe(db.Model):
             "meal_type": self.meal_type,
             "ingredients_count": self.ingredients_count,
             "ingredients_list": self.ingredients_list,
-            "time": self.time,
+            "time": str(self.time),
             "method": self.method
         }
     
