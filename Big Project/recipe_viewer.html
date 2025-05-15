@@ -188,7 +188,7 @@
                     time: document.getElementById("recipeTime").value,
                     method: document.getElementById("recipeMethod").value
                 };
-            
+<!-- 
                 fetch("http://localhost:5000/recipes", {
                     method: "POST",
                     headers: {
@@ -203,9 +203,27 @@
                         alert("Failed to add recipe.");
                     }
                 });
-            
+
                 return false; // prevent default form submission
             }
+            -->
+            
+            const method = id ? "PUT" : "POST";
+            const url = id ? `${API_URL}/${id}` : API_URL;
+
+            fetch(url, {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(recipe)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Recipe saved!");
+                    document.getElementById("createForm").style.display = "none";
+                    loadRecipes();
+                } else {
+                    alert("Failed to save recipe.");
+                }
+            });
             </script>
             <script>
                 function editRecipe(id) {
