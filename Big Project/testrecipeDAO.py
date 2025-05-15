@@ -40,6 +40,7 @@ print (result)
 #update
 new_recipes_value = {
     "name": "Banana Bread with Walnuts",
+    "meal_type": "Snack",
     "ingredients_count": 9,
     "ingredients_list": """3-4 ripe Bananas, 
                             340g flour, 
@@ -59,7 +60,7 @@ new_recipes_value = {
                  6. Leave to cool for 10 mins before removing from the tin."""}
 print("\n Updating the recipe")
 recipe_dao.update(recipes_id, new_recipes_value)
-print("Recipe updated", id)
+print("Recipe updated", recipes_id)
 print(result)
 print("🔧 With values:")
 
