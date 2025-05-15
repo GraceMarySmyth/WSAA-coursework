@@ -85,3 +85,5 @@ https://www.digitalocean.com/community/tutorials/how-to-import-and-export-databa
 https://stackoverflow.com/questions/42906665/import-my-database-connection-with-python
 
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
+
+https://www.w3schools.com/html/html_comments.asp
