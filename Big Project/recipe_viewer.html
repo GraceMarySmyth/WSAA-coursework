@@ -224,11 +224,14 @@
                     alert("Failed to save recipe.");
                 }
             });
+
+            return false; // prevent default form submission
+        }
             </script>
             <script>
                 function editRecipe(id) {
                     // Fetch the recipe data and populate the form for editing
-                    fetch(`http://localhost:5000/recipes/${id}`)
+                    fetch(`${API_URL}/${id}`)
                         .then(response => response.json())
                         .then(data => {
                             document.getElementById("recipeId").value = data.id;
@@ -238,14 +241,13 @@
                             document.getElementById("ingredientList").value = data.ingredients_list;
                             document.getElementById("recipeTime").value = data.time;
                             document.getElementById("recipeMethod").value = data.method;
-                            
+                            document.getElementById("createForm").style.display = "block";
                             // Show the form for editing
-                            showCreateForm();
                         });
                 }
             
                 function deleteRecipe(id) {
-                    fetch(`http://localhost:5000/recipes/${id}`, {
+                    fetch(`${API_URL}/${id}`, {
                         method: "DELETE"
                     }).then(response => {
                         if (response.ok) {
