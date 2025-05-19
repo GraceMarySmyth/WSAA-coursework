@@ -148,6 +148,8 @@
             </form>    
         </div>
         <script>
+            
+           document.addEventListener("DOMContentLoaded", function () { 
             const API_URL = "http://localhost:5000/recipes";
             
             function showCreateForm() {
@@ -177,41 +179,20 @@
                         `;
                         tableBody.appendChild(row);
                     });
-                });
+            });
         }
-    document.addEventListener("DOMContentLoaded", function () {
-        loadRecipes();
-    });
-            function saveRecipe() {
-                const id = document.getElementById("recipeId").value;
-                const recipe = {
-                    name: document.getElementById("recipeName").value,
-                    meal_type: document.getElementById("mealType").value,
-                    ingredients_count: parseInt(document.getElementById("ingredientCount").value),
-                    ingredients_list: document.getElementById("ingredientList").value,
-                    time: document.getElementById("recipeTime").value,
-                    method: document.getElementById("recipeMethod").value
-                };
-<!-- 
-                fetch("http://localhost:5000/recipes", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                }).then(response => {
-                    if (response.ok) {
-                        alert("Recipe added successfully!");
-                        location.reload();  // Reload to show the updated recipe list
-                    } else {
-                        alert("Failed to add recipe.");
-                    }
-                });
 
-                return false; // prevent default form submission
-            }
-            -->
-            
+        function saveRecipe() {
+            const id = document.getElementById("recipeId").value;
+            const recipe = {
+                name: document.getElementById("recipeName").value,
+                meal_type: document.getElementById("mealType").value,
+                ingredients_count: parseInt(document.getElementById("ingredientCount").value),
+                ingredients_list: document.getElementById("ingredientList").value,
+                time: document.getElementById("recipeTime").value,
+                method: document.getElementById("recipeMethod").value
+            };
+        
             const method = id ? "PUT" : "POST";
             const url = id ? `${API_URL}/${id}` : API_URL;
 
@@ -231,7 +212,8 @@
 
             return false; // prevent default form submission
         }
-            </script>
+    });
+    </script>
             <script>
                 function editRecipe(id) {
                     // Fetch the recipe data and populate the form for editing
@@ -261,13 +243,17 @@
                             alert("Failed to delete recipe.");
                         }
                     });
-                }              
-            </script>
-        <script>
-            // Load recipes when the page loads
-           document.addEventListener("DOMContentLoaded", function () {
+                }
+                // Load recipes when the page is loaded
                 loadRecipes();
-            });  
-        </script>
+
+                window.saveRecipe = saveRecipe;
+                window.editRecipe = editRecipe;
+                window.deleteRecipe = deleteRecipe;
+                window.showCreateForm = showCreateForm;
+                window.loadRecipes = loadRecipes;
+            });
+            </script>
+
     </body>
 </html>
