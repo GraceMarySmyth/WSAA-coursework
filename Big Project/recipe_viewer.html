@@ -179,7 +179,9 @@
                     });
                 });
         }
-
+    document.addEventListener("DOMContentLoaded", function () {
+        loadRecipes();
+    });
             function saveRecipe() {
                 const id = document.getElementById("recipeId").value;
                 const recipe = {
