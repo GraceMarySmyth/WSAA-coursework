@@ -5,8 +5,7 @@ from sqlalchemy.sql import text
 from recipeDAO import recipe_dao
 from flask_cors import CORS
 
-app = Flask("Smyth_Family_Recipes")
-CORS(app)
+
 
 # Imports to support users downloading the recipes as either a CSV or JSON file
 import csv
@@ -16,6 +15,8 @@ from flask import make_response
 # Create a Flask application instance
 # This is the main entry point for the application
 app = Flask("Smyth_Family_Recipes")
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/smyth_family_recipes'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
