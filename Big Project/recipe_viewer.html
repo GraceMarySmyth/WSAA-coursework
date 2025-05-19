@@ -37,6 +37,7 @@
             }
             button:hover {
                 background-color: #3922a1; /* dark blue */
+            }
             #createForm {
                 margin-top: 30px;
             }
@@ -107,7 +108,8 @@
                         <td><button onclick="deleteRecipe(1)">delete</button></td>
                     </tr>
                 </tbody>   --> 
-        </tbody>    
+    </tbody>
+                    <!-- Recipe data will be populated here by JavaScript -->
         </table>
         </div>
         <div id="createForm"></div>
@@ -149,7 +151,7 @@
             const API_URL = "http://localhost:5000/recipes";
             
             function showCreateForm() {
-                document.getElementById("recipeForm").reset;
+                document.getElementById("recipeForm").reset();
                 document.getElementById("recipeId").value = "";
                 document.getElementById("createForm").style.display = "block";
             }
@@ -259,5 +261,11 @@
                     });
                 }              
             </script>
+        <script>
+            // Load recipes when the page loads
+            window.onload = function() {
+                loadRecipes();
+            };  
+        </script>
     </body>
 </html>
