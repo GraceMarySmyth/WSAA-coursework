@@ -82,7 +82,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
                 <!-- 
                 <tbody>
@@ -150,9 +150,12 @@
                 <button type="submit">Save Recipe</button>
             </form>    
         </div>
-     <script>
+    <script>
+
+const API_URL = "http://localhost:5000/recipes";
+
 document.addEventListener("DOMContentLoaded", function () {
-    const API_URL = "http://localhost:5000/recipes";
+    
 
     function showCreateForm() {
         document.getElementById("recipeForm").reset();
