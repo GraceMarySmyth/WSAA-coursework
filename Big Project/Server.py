@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import Time
 from sqlalchemy.sql import text
 from recipeDAO import recipe_dao
-
+from flask_cors import CORS
 # Imports to support users downloading the recipes as either a CSV or JSON file
 import csv
 import io
