@@ -163,10 +163,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadRecipes() {
         fetch(API_URL)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+            })
             .then(recipes => {
                 const tableBody = document.querySelector("#RecipeTable tbody");
                 tableBody.innerHTML = "";
+                if (recipes.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>"; // Display message if no recipes
+            } else {
                 recipes.forEach(recipe => {
                     const row = document.createElement("tr");
                     row.innerHTML = `
@@ -182,7 +190,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
                     tableBody.appendChild(row);
                 });
-            });
+            }
+            })
+            .catch(error => {
+                console.error("Error fetching recipes:", error);
+                const tableBody = document.querySelector("#RecipeTable tbody");
+                tableBody.innerHTML = "<tr><td colspan='9'>Error loading recipes.</td></tr>";
+            });  
     }
 
     function saveRecipe() {
