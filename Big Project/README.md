@@ -87,3 +87,5 @@ https://stackoverflow.com/questions/42906665/import-my-database-connection-with-
 https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
 
 https://www.w3schools.com/html/html_comments.asp
+
+https://forum.freecodecamp.org/t/solved-fetch-api-not-working-at-all-or-working-only-half-the-time
