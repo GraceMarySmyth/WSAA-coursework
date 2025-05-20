@@ -111,8 +111,8 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             function showCreateForm() {
-                document.getElementById("recipeForm").reset();
-                document.getElementById("recipeId").value = "";
+                document.getElementById("recipeForm").reset(); // Reset the form
+                document.getElementById("recipeId").value = ""; // Clear the hidden ID field
                 document.getElementById("createForm").style.display = "block";
             }
 
@@ -178,6 +178,7 @@
                         document.getElementById("recipeForm").reset();
                         document.getElementById("recipeId").value = ""; 
                         loadRecipes();
+                        document.getElementById("RecipeTable").scrollInToView({ behavior: "smooth" }); // Scroll to the table
                     } else {
                         alert("Failed to save recipe.");
                     }
