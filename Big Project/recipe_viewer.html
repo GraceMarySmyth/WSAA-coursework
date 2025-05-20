@@ -61,6 +61,14 @@
         <button onclick="location.reload()">View all recipes</button><br/><br/>
     </div>
 
+    <h2>Search by Ingredient</h2>
+    <p>Enter an ingredient to search for recipes that include it.</p>
+    <div>
+    <input type="text" id="ingredientSearch" placeholder="Enter ingredient to search">
+    <button onclick="searchByIngredient()">Search</button>
+    <button onclick="loadRecipes()">Reset</button>
+</div><br/>
+
     <div>
         <table id="RecipeTable" border="1">
             <thead>
