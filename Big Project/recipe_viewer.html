@@ -74,7 +74,7 @@
 
     <div id="createForm">
         <h2 id="formTitle">Create a Recipe</h2>
-        <form id="recipeForm" onsubmit="return saveRecipe()">
+        <form id="recipeForm" onsubmit="saveRecipe(event)">
             <input type="hidden" id="recipeId" name="id">
 
             <label>Name of Recipe:</label><br/>
@@ -152,7 +152,8 @@
                     });
             }
 
-            function saveRecipe() {
+            function saveRecipe(event) {
+                if (event) event.preventDefault();
                 const id = document.getElementById("recipeId").value;
                 const recipe = {
                     name: document.getElementById("recipeName").value,
@@ -163,7 +164,7 @@
                     method: document.getElementById("recipeMethod").value
                 };
 
-                const method = id ? "PUT" : "POST";
+                const method = id ? "PUT" : "POST"; // Use PUT for update, POST for create
                 const url = id ? `${API_URL}/${id}` : API_URL;
 
                 fetch(url, {
@@ -174,6 +175,8 @@
                     if (response.ok) {
                         alert("Recipe saved!");
                         document.getElementById("createForm").style.display = "none";
+                        document.getElementById("recipeForm").reset();
+                        document.getElementById("recipeId").value = ""; 
                         loadRecipes();
                     } else {
                         alert("Failed to save recipe.");
