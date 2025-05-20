@@ -221,6 +221,40 @@
                     });
             };
 
+            function searchByIngredient() {
+                const searchTerm = document.getElementById("ingredientSearch").value.toLowerCase();
+                fetch(API_URL)
+                .then(response => response.json())
+                .then(recipes => {
+                    const filtered = recipes.filter(recipe =>
+                        recipe.ingredients_list.toLowerCase().includes(searchTerm)
+            );
+
+                    const tableBody = document.querySelector("#RecipeTable tbody");
+                    tableBody.innerHTML = "";
+
+                    if (filtered.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='9'>No recipes found with that ingredient.</td></tr>";
+                    } else {
+                        filtered.forEach(recipe => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${recipe.id}</td>
+                                <td>${recipe.name}</td>
+                                <td>${recipe.meal_type}</td>
+                                <td>${recipe.ingredients_count}</td>
+                                <td>${recipe.ingredients_list}</td>
+                                <td>${recipe.time}</td>
+                                <td>${recipe.method}</td>
+                                <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
+                                <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
+                         `;
+                        tableBody.appendChild(row);
+                });
+            }
+        });
+}
+
             window.deleteRecipe = function(id) {
                 fetch(`${API_URL}/${id}`, {
                     method: "DELETE"
