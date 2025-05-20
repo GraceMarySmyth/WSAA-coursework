@@ -37,8 +37,18 @@
             background-color: #3922a1;
         }
         #createForm {
-            margin-top: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            height: auto;
+            overflow: hidden;
         }
+
+        #createForm.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
     </style>
 </head>
 <body>
@@ -115,7 +125,9 @@
                 document.getElementById("recipeId").value = ""; // Clear the hidden ID field
                 document.getElementById("createForm").style.display = "block";
             }
-
+            function hideCreateForm() {
+                document.getElementById("createForm").classList.remove("visible");
+            }
             function loadRecipes() {
                 fetch(API_URL)
                     .then(response => {
@@ -174,6 +186,7 @@
                 }).then(response => {
                     if (response.ok) {
                         alert("Recipe saved!");
+                        hideCreateForm();
                         document.getElementById("createForm").style.display = "none";
                         document.getElementById("recipeForm").reset();
                         document.getElementById("recipeId").value = ""; 
@@ -215,7 +228,8 @@
 
             window.saveRecipe = saveRecipe;
             window.showCreateForm = showCreateForm;
-
+            window.hideCreateForm = hideCreateForm;
+            window.loadRecipes = loadRecipes;
             // Load on start
             loadRecipes();
         });
