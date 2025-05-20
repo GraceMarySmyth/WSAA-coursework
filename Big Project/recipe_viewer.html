@@ -1,3 +1,4 @@
+
 <html>
     <head>
         <title>Smyth Family Recipes</title>
@@ -43,24 +44,13 @@
             }
         </style>
     </head>
-    <body>
+
         <h1>Smyth Family Recipes</h1>
 
         <h2>Welcome to the recipe viewer</h2>
 
         <p>Here you can view, create, update, and delete recipes.</p>
-        <!--   
-        <p>Click the button below to create a new recipe.</p>
-        <p>Click the button below to view all recipes.</p>  
-        <p>Click the button below to update a recipe.</p>
-        <p>Click the button below to delete a recipe.</p>
-        <p>Click the button below to view a recipe.</p>
-        <p>Click the button below to view a recipe by id.</p>
-        <p>Click the button below to view a recipe by name.</p>
-        <p>Click the button below to view a recipe by meal type.</p>
-        <p>Click the button below to view a recipe by number of ingredients.</p>
-        <p>Click the button below to view a recipe by time.</p>
-     -->  
+ 
         <div>
             <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
             <button onclick="location.reload()">View all recipes</button><br/><br/>
@@ -82,34 +72,7 @@
                     </tr>
                 </thead>
               
-                <!-- 
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Banana Bread</td>
-                        <td>Snack</td>
-                        <td>8</td>
-                        <td>3-4 ripe Bananas, 
-                            340g flour, 
-                            170g sugar, 
-                            70g dairy free butter, 
-                            1 egg, 
-                            1 tbs baking powder, 
-                            pinch of salt, 
-                            1 tbsp vanilla</td>
-                        <td>1 hour 10mins</td>
-                        <td>1. Preheat oven to 175 
-                            2. Mix the butter and Bananas
-                            3. mix the sugar egg and vanilla.
-                            4. Add the salt, baking powder and flour and mix well.
-                            5. Pour into a loaf tin and bake for 1 hour.
-                            6. Leave to cool for 10 mins before removing from the tin.
-                        </td>
-                        <td><button onclick="editRecipe(1)">update</button></td>
-                        <td><button onclick="deleteRecipe(1)">delete</button></td>
-                    </tr>
-                </tbody>   --> 
-    </tbody>
+    <body></tbody>
                     <!-- Recipe data will be populated here by JavaScript -->
         </table>
         </div>
@@ -153,8 +116,6 @@
 const API_URL = "http://localhost:5000/recipes";
 
 document.addEventListener("DOMContentLoaded", function () {
-    
-
     function showCreateForm() {
         document.getElementById("recipeForm").reset();
         document.getElementById("recipeId").value = "";
@@ -193,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     tableBody.appendChild(row);
                 });
             }
-            })
+         })
             .catch(error => {
                 console.error("Error fetching recipes:", error);
                 const tableBody = document.querySelector("#RecipeTable tbody");
@@ -229,11 +190,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Failed to save recipe.");
             }
         });
-         
         return false; // prevent default form submission
     }
 
-    function editRecipe(id) {
+    window.editRecipe = function(id) {
         fetch(`${API_URL}/${id}`)
             .then(response => response.json())
             .then(data => {
@@ -248,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function deleteRecipe(id) {
+    window.deleteRecipe = function(id) {
         fetch(`${API_URL}/${id}`, {
             method: "DELETE"
         }).then(response => {
@@ -272,6 +232,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-
-    </body>
+</body>
 </html>
