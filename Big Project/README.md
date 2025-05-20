@@ -17,8 +17,16 @@ Firstly a virtual environment was created using the  following commands:
         pip install flask flask_sqlalchemy
     # saved the requirements to requirements.txt
         pip freeze > requirements.txt
+    # to reinstall the packages use the command pip install -r requirements.txt
 
-
+Running the Code:
+    # Cmder console required.
+    # Navigate to "Big Project" in both consoles.
+    # In one console run python Server.py
+    # In second console run python -m http.server.
+    # Open an incognito browser. This is optional depending on browser settings. 
+    # in incognito browser open http://localhost:8000/recipe_viewer.html.
+    # Smyth Family Recipes available
 
 In this "Big Project" the following files are contained:
 Readme.md
