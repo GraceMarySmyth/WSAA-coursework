@@ -1,40 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <div class="container">
     <title>Smyth Family Recipes</title>
     <style>
+        .container { 
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff; 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #edf1b4;
+            font-family: 'Segoe UI',Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf6e3;
             margin: 0;
             padding: 20px;
-        }
-        h1 {
             color: #333;
+        }
+        h1, h2 {
+            color: #2a7f62;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x:auto;
         }
         th, td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            vertical-align: top;
         }
         th {
             background-color: #d366b2;
         }
         button {
-            background-color: #3ebee6;
+            background-color: #ff8c42;
             border: none;
             color: white;
             padding: 10px 20px;
             font-size: 16px;
-            margin-top: 10px;
+            font-weight: bold;
+            margin-top: 8px 4px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #3922a1;
+            background-color: #e67e22;
         }
         #createForm {
             opacity: 0;
@@ -47,9 +63,11 @@
         #createForm.visible {
             opacity: 1;
             visibility: visible;
+            max-height: 1000px; /* Adjust as needed */
         }
         
     </style>
+    </div>
 </head>
 <body>
     <h1>Smyth Family Recipes</h1>
@@ -69,7 +87,7 @@
     <button onclick="loadRecipes()">Reset</button>
 </div><br/>
 
-    <div>
+    <div style="overflow-x:auto;">
         <table id="RecipeTable" border="1">
             <thead>
                 <tr>
@@ -134,7 +152,7 @@
                 document.getElementById("createForm").style.display = "block";
             }
             function hideCreateForm() {
-                document.getElementById("createForm").classList.remove("visible");
+                document.getElementById("createForm").classList.toggle("show");
             }
             function loadRecipes() {
                 fetch(API_URL)
