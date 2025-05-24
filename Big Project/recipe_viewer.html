@@ -238,8 +238,7 @@
                     .then(recipes => {
                         const grid = document.querySelector(".recipe-grid");
                         grid.innerHTML = ""; // Clear existing recipes
-                    })
-                    
+
                         if (recipes.length === 0) {
                             grid.innerHTML = "<p>No recipes found.</p>";
                         } else {
@@ -252,6 +251,8 @@
                                     <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
                                     <p class="recipe-time">Time: ${recipe.time}</p>
                                     <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
+                                    <p class="recipe-method">Method: ${recipe.method}</p>
+                                    <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
                                     <div class="recipe-actions">
                                         <button onclick="editRecipe(${recipe.id})">Update</button>
                                         <button onclick="deleteRecipe(${recipe.id})">Delete</button>
@@ -295,7 +296,7 @@
                         document.getElementById("recipeForm").reset();
                         document.getElementById("recipeId").value = ""; 
                         loadRecipes();
-                        document.getElementById("RecipeTable").scrollInToView({ behavior: "smooth" }); // Scroll to the table
+                        document.getElementById("RecipeTable").scrollIntoView({ behavior: "smooth" }); // Scroll to the table
                     } else {
                         alert("Failed to save recipe.");
                     }
