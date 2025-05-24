@@ -167,19 +167,18 @@
                             tableBody.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
                         } else {
                             recipes.forEach(recipe => {
-                                const row = document.createElement("tr");
-                                row.innerHTML = `
-                                    <td>${recipe.id}</td>
-                                    <td>${recipe.name}</td>
-                                    <td>${recipe.meal_type}</td>
-                                    <td>${recipe.ingredients_count}</td>
-                                    <td>${recipe.ingredients_list}</td>
-                                    <td>${recipe.time}</td>
-                                    <td>${recipe.method}</td>
+                                const card = document.createElement("tr");
+                                card.className = "recipe-card";
+                                card.innerHTML = `
+                                    <h3 class="recipe-title">${recipe.name}</h3>
+                                    <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
+                                    <p class="recipe-time">Time: ${recipe.time}</p>
+                                    <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
+                                    <div class="recipe-actions">
                                     <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
                                     <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
                                 `;
-                                tableBody.appendChild(row);
+                                grid.appendChild(card);
                             });
                         }
                     })
