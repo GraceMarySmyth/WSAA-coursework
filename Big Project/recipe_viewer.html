@@ -142,6 +142,7 @@
     </div>
 </head>
 <body>
+    <div class="container">
     <h1>Smyth Family Recipes</h1>
     <h2>Welcome to the recipe viewer</h2>
     <p>Here you can view, create, update, and delete recipes.</p>
@@ -218,6 +219,7 @@
         const API_URL = "http://localhost:5000/recipes";
 
         document.addEventListener("DOMContentLoaded", function () {
+            // Show the create form when the page loads
             function showCreateForm() {
                 document.getElementById("recipeForm").reset(); // Reset the form
                 document.getElementById("recipeId").value = ""; // Clear the hidden ID field
@@ -239,7 +241,7 @@
                     })
                     
                         if (recipes.length === 0) {
-                            grid.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
+                            grid.innerHTML = "<p>No recipes found.</p>";
                         } else {
                             recipes.forEach(recipe => {
                                 const card = document.createElement("div");
@@ -251,8 +253,8 @@
                                     <p class="recipe-time">Time: ${recipe.time}</p>
                                     <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
                                     <div class="recipe-actions">
-                                    <button onclick="editRecipe(${recipe.id})">Update</button>
-                                    <button onclick="deleteRecipe(${recipe.id})">Delete</button>
+                                        <button onclick="editRecipe(${recipe.id})">Update</button>
+                                        <button onclick="deleteRecipe(${recipe.id})">Delete</button>
                                     </div>
                                 `;
                                 grid.appendChild(card);
