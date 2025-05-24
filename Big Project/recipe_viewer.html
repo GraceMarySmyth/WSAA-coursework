@@ -145,7 +145,6 @@
     
 <body>
     <div class="container">
-        <button onclick="toggleView()">Switch to Table View</button>
     <h1>Smyth Family Recipes</h1>
     <h2>Welcome to the recipe viewer</h2>
     <p>Here you can view, create, update, and delete recipes.</p>
@@ -153,6 +152,7 @@
     <div>
         <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
         <button onclick="location.reload()">View all recipes</button><br/><br/>
+        <button onclick="toggleView()">Switch to Table View</button>
     </div>
 
     <h2>Search by Ingredient</h2>
@@ -162,7 +162,27 @@
     <button onclick="searchByIngredient()">Search</button>
     <button onclick="loadRecipes()">Reset</button>
     </div><br/>
+<div>
+    let currentView = 'card';
 
+    function toggleView() {
+  const tableView = document.getElementById('recipeTableView');
+  const cardView = document.getElementById('recipeCardView');
+  const toggleButton = document.querySelector('button[onclick="toggleView()"]');
+
+  if (currentView === 'card') {
+    cardView.style.display = 'none';
+    tableView.style.display = 'block';
+    toggleButton.textContent = 'Switch to Card View';
+    currentView = 'table';
+  } else {
+    tableView.style.display = 'none';
+    cardView.style.display = 'block';
+    toggleButton.textContent = 'Switch to Table View';
+    currentView = 'card';
+  }
+}
+</div>
     <div style="overflow-x:auto;">
         <table id="RecipeTable" border="1">
             <thead>
@@ -323,6 +343,7 @@
 
             function searchByIngredient() {
                 const searchTerm = document.getElementById("ingredientSearch").value.toLowerCase();
+               
                 fetch(API_URL)
                 .then(response => response.json())
                 .then(recipes => {
@@ -330,10 +351,11 @@
                         recipe.ingredients_list.toLowerCase().includes(searchTerm)
             );
 
-                    const tableBody = document.querySelector("#RecipeTable tbody");
-                    tableBody.innerHTML = "";
-
-                    if (filtered.length === 0) {
+                if (currentView === 'Card') {
+                    renderCardView(filtered);
+                } else {
+                    renderTableView(filtered);
+                }
                         tableBody.innerHTML = "<tr><td colspan='9'>No recipes found with that ingredient.</td></tr>";
                     } else {
                         filtered.forEach(recipe => {
