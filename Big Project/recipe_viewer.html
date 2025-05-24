@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <div class="recipe-grid"></div>
+        <h2>Recipe Cards</h2>
+        <!-- Recipe cards will be populated here by JavaScript -->
     <div class="container">
     <title>Smyth Family Recipes</title>
     <style>
@@ -217,9 +220,12 @@
             }
             function loadRecipes() {
                 fetch(API_URL)
-                    .then(response => {
+                    .then(response => response.json())
+                    .then(recipes => {
+                        const grid = document.querySelector(".recipe-grid");
                         if (!response.ok) throw new Error('Network error: ' + response.statusText);
                         return response.json();
+                        grid.innerHTML = ""; // Clear existing recipes
                     })
                     .then(recipes => {
                         const tableBody = document.querySelector("#RecipeTable tbody");
