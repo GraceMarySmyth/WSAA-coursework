@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <div class="recipe-grid"></div>
         <h2>Recipe Cards</h2>
         <!-- Recipe cards will be populated here by JavaScript -->
     <div class="container">
@@ -137,7 +136,7 @@
     <h1>Smyth Family Recipes</h1>
     <h2>Welcome to the recipe viewer</h2>
     <p>Here you can view, create, update, and delete recipes.</p>
-
+    <div class="recipe-grid"></div>
     <div>
         <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
         <button onclick="location.reload()">View all recipes</button><br/><br/>
@@ -149,7 +148,7 @@
     <input type="text" id="ingredientSearch" placeholder="Enter ingredient to search">
     <button onclick="searchByIngredient()">Search</button>
     <button onclick="loadRecipes()">Reset</button>
-</div><br/>
+    </div><br/>
 
     <div style="overflow-x:auto;">
         <table id="RecipeTable" border="1">
@@ -220,30 +219,31 @@
             }
             function loadRecipes() {
                 fetch(API_URL)
-                    .then(response => response.json())
-                    .then(recipes => {
-                        const grid = document.querySelector(".recipe-grid");
+                    .then(response => {
                         if (!response.ok) throw new Error('Network error: ' + response.statusText);
                         return response.json();
-                        grid.innerHTML = ""; // Clear existing recipes
                     })
                     .then(recipes => {
-                        const tableBody = document.querySelector("#RecipeTable tbody");
-                        tableBody.innerHTML = "";
+                        const grid = document.querySelector(".recipe-grid");
+                        grid.innerHTML = ""; // Clear existing recipes
+                    })
+                    
                         if (recipes.length === 0) {
-                            tableBody.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
+                            grid.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
                         } else {
                             recipes.forEach(recipe => {
-                                const card = document.createElement("tr");
+                                const card = document.createElement("div");
                                 card.className = "recipe-card";
                                 card.innerHTML = `
+                                    <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
                                     <h3 class="recipe-title">${recipe.name}</h3>
                                     <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
                                     <p class="recipe-time">Time: ${recipe.time}</p>
                                     <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
                                     <div class="recipe-actions">
-                                    <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
-                                    <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
+                                    <button onclick="editRecipe(${recipe.id})">Update</button>
+                                    <button onclick="deleteRecipe(${recipe.id})">Delete</button>
+                                    </div>
                                 `;
                                 grid.appendChild(card);
                             });
@@ -251,8 +251,8 @@
                     })
                     .catch(error => {
                         console.error("Error fetching recipes:", error);
-                        const tableBody = document.querySelector("#RecipeTable tbody");
-                        tableBody.innerHTML = "<tr><td colspan='9'>Error loading recipes.</td></tr>";
+                        const grid = document.querySelector("#RecipeTable tbody");
+                        grid.innerHTML = "<tr><td colspan='9'>Error loading recipes.</td></tr>";
                     });
             }
 
