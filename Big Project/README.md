@@ -20,7 +20,7 @@ Firstly a virtual environment was created using the  following commands:
     # to reinstall the packages use the command pip install -r requirements.txt
 
 Running the Code:
-    # Cmder console required.
+    # Two Cmder consoles required.
     # Navigate to "Big Project" in both consoles.
     # In one console run python Server.py
     # In second console run python -m http.server.
@@ -29,6 +29,7 @@ Running the Code:
     # Smyth Family Recipes available
 
 In this "Big Project" the following files are contained:
+
 Readme.md
 Lists all the files in the project and also contains References used to complete this project.
 
