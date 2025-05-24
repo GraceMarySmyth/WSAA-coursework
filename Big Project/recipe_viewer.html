@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Smyth Family Recipes</title>
         <h2>Recipe Cards</h2>
         <!-- Recipe cards will be populated here by JavaScript -->
     <div class="container">
-    <title>Smyth Family Recipes</title>
+
     <style>
         .container { 
             max-width: 900px;
@@ -221,6 +222,7 @@
                 document.getElementById("recipeForm").reset(); // Reset the form
                 document.getElementById("recipeId").value = ""; // Clear the hidden ID field
                 document.getElementById("createForm").style.display = "block";
+                document.getElementById("createForm").classList.add("visible");
             }
             function hideCreateForm() {
                 document.getElementById("createForm").classList.toggle("show");
