@@ -2,10 +2,6 @@
 <html>
 <head>
     <title>Smyth Family Recipes</title>
-        <h2>Recipe Cards</h2>
-        <!-- Recipe cards will be populated here by JavaScript -->
-    <div class="container">
-
     <style>
         .container { 
             max-width: 900px;
@@ -140,106 +136,55 @@
   }
         }
     </style>
-    </div>
 </head>
     
 <body>
     <div class="container">
-    <h1>Smyth Family Recipes</h1>
-    <h2>Welcome to the recipe viewer</h2>
-    <p>Here you can view, create, update, and delete recipes.</p>
-    <div id="recipeCardView" class="recipe-grid"></div>
-    <div>
-  <button onclick="toggleView()">Switch to Table View</button>
-</div>
-
-<!-- Card View (visible by default) -->
-<div id="recipeCardView" class="recipe-grid"></div>
-
-<!-- Table View (hidden by default) -->
-<div id="recipeTableView" style="display: none;">
-  <table id="RecipeTable" border="1">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>Name of recipe</th>
-        <th>Meal type</th>
-        <th>Number of Ingredients</th>
-        <th>Ingredient List</th>
-        <th>Time</th>
-        <th>Method</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Table rows populated by JavaScript -->
-    </tbody>
-  </table>
-</div>
-   
-    <div>
-        <button onclick="toggleView()">Switch to Table View</button>
-    </div>
-
+        <h1>Smyth Family Recipes</h1>
+        <h2>Welcome to the recipe viewer</h2>
+        <p>Here you can view, create, update, and delete recipes.</p>
+        <div id="cardView" class="recipe-grid"></div>
+        <div>
+            <button id="toggleViewBtn" onclick="toggleView()">Switch to Table View</button>
+        </div>
         <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
         <button onclick="location.reload()">View all recipes</button><br/><br/>
-        
+    </div>
+
+    <div id="tableView" style="display: none;">
+        <div style="overflow-x:auto;">
+            <table id="recipeTable" border="1">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Name of recipe</th>
+                        <th>Meal type</th>
+                        <th>Number of Ingredients</th>
+                        <th>Ingredient List</th>
+                        <th>Time</th>
+                        <th>Method</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table rows populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <h2>Search by Ingredient</h2>
     <p>Enter an ingredient to search for recipes that include it.</p>
     <div>
-    <input type="text" id="ingredientSearch" placeholder="Enter ingredient to search">
-    <button onclick="searchByIngredient()">Search</button>
-    <button onclick="loadRecipes()">Reset</button>
+        <input type="text" id="ingredientSearch" placeholder="Enter ingredient to search">
+        <button onclick="searchByIngredient()">Search</button>
+        <button onclick="loadRecipes()">Reset</button>
     </div><br/>
 
-    let currentView = 'card';
-
-    function toggleView() {
-        const tableView = document.getElementById('recipeTableView');
-        const cardView = document.getElementById('recipeCardView');
-        const toggleButton = document.querySelector('button[onclick="toggleView()"]');
-
-        if (currentView === 'card') {
-            cardView.style.display = 'none';
-            tableView.style.display = 'block';
-            toggleButton.textContent = 'Switch to Card View';
-            currentView = 'table';
-        } else {
-            tableView.style.display = 'none';
-            cardView.style.display = 'block';
-            toggleButton.textContent = 'Switch to Table View';
-            currentView = 'card';
-        }
-    }
-    <div style="overflow-x:auto;">
-        <table id="RecipeTable" border="1">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Name of recipe</th>
-                    <th>Meal type</th>
-                    <th>Number of Ingredients</th>
-                    <th>Ingredient List</th>
-                    <th>Time</th>
-                    <th>Method</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Recipe data will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </div>
-
     <div id="createForm">
-        <h2 id="formTitle">Create a Recipe</h2>
         <form id="recipeForm" onsubmit="saveRecipe(event)">
-            <input type="hidden" id="recipeId" name="id">
-
+            <input type="hidden" id="recipeId">
             <label>Name of Recipe:</label><br/>
             <input type="text" id="recipeName" required><br/>
 
@@ -266,219 +211,209 @@
             </select><br/><br/>
 
             <button type="submit">Save Recipe</button>
-        </form>
-    </div>
-
     <script>
         const API_URL = "http://localhost:5000/recipes";
+        let currentView = 'card';
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Show the create form when the page loads
-            function showCreateForm() {
-                document.getElementById("recipeForm").reset(); // Reset the form
-                document.getElementById("recipeId").value = ""; // Clear the hidden ID field
-                document.getElementById("createForm").style.display = "block";
-                document.getElementById("createForm").classList.add("visible");
-            }
-            function hideCreateForm() {
-                document.getElementById("createForm").classList.toggle("show");
-            }
-            function loadRecipes() {
-                fetch(API_URL)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network error: ' + response.statusText);
-                        return response.json();
-                    })
-                    .then(recipes => {
-                        const grid = document.querySelector(".recipe-grid");
-                        grid.innerHTML = ""; // Clear existing recipes
+        function showCreateForm() {
+            document.getElementById("recipeForm").reset();
+            document.getElementById("recipeId").value = "";
+            document.getElementById("createForm").style.display = "block";
+            document.getElementById("createForm").classList.add("visible");
+        }
+        function hideCreateForm() {
+            document.getElementById("createForm").classList.remove("visible");
+            document.getElementById("createForm").style.display = "none";
+        }
 
-                        if (recipes.length === 0) {
-                            grid.innerHTML = "<p>No recipes found.</p>";
-                        } else {
-                            recipes.forEach(recipe => {
-                                const card = document.createElement("div");
-                                card.className = "recipe-card";
-                                card.innerHTML = `
-                                    <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
-                                    <h3 class="recipe-title">${recipe.name}</h3>
-                                    <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
-                                    <p class="recipe-time">Time: ${recipe.time}</p>
-                                    <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
-                                    <p class="recipe-method">Method: ${recipe.method}</p>
-                                    <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
-                                    <div class="recipe-actions">
-                                        <button onclick="editRecipe(${recipe.id})">Update</button>
-                                        <button onclick="deleteRecipe(${recipe.id})">Delete</button>
-                                    </div>
-                                `;
-                                grid.appendChild(card);
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching recipes:", error);
-                        const grid = document.querySelector("#RecipeTable tbody");
-                        grid.innerHTML = "<tr><td colspan='9'>Error loading recipes.</td></tr>";
-                    });
-            }
-
-            function saveRecipe(event) {
-                if (event) event.preventDefault();
-                const id = document.getElementById("recipeId").value;
-                const recipe = {
-                    name: document.getElementById("recipeName").value,
-                    meal_type: document.getElementById("mealType").value,
-                    ingredients_count: parseInt(document.getElementById("ingredientCount").value),
-                    ingredients_list: document.getElementById("ingredientList").value,
-                    time: document.getElementById("recipeTime").value,
-                    method: document.getElementById("recipeMethod").value
-                };
-
-                const method = id ? "PUT" : "POST"; // Use PUT for update, POST for create
-                const url = id ? `${API_URL}/${id}` : API_URL;
-
-                fetch(url, {
-                    method: method,
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(recipe)
-                }).then(response => {
-                    if (response.ok) {
-                        alert("Recipe saved!");
-                        hideCreateForm();
-                        document.getElementById("createForm").style.display = "none";
-                        document.getElementById("recipeForm").reset();
-                        document.getElementById("recipeId").value = ""; 
-                        loadRecipes();
-                        document.getElementById("RecipeTable").scrollIntoView({ behavior: "smooth" }); // Scroll to the table
-                    } else {
-                        alert("Failed to save recipe.");
-                    }
+        function renderCardView(recipes) {
+            const grid = document.getElementById("cardView");
+            grid.innerHTML = "";
+            if (recipes.length === 0) {
+                grid.innerHTML = "<p>No recipes found.</p>";
+            } else {
+                recipes.forEach(recipe => {
+                    const card = document.createElement("div");
+                    card.className = "recipe-card";
+                    card.innerHTML = `
+                        <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
+                        <h3 class="recipe-title">${recipe.name}</h3>
+                        <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
+                        <p class="recipe-time">Time: ${recipe.time}</p>
+                        <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
+                        <p class="recipe-method">Method: ${recipe.method}</p>
+                        <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
+                        <div class="recipe-actions">
+                            <button onclick="editRecipe(${recipe.id})">Update</button>
+                            <button onclick="deleteRecipe(${recipe.id})">Delete</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
                 });
             }
+        }
 
-            window.editRecipe = function(id) {
-                fetch(`${API_URL}/${id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById("recipeId").value = data.id;
-                        document.getElementById("recipeName").value = data.name;
-                        document.getElementById("mealType").value = data.meal_type;
-                        document.getElementById("ingredientCount").value = data.ingredients_count;
-                        document.getElementById("ingredientList").value = data.ingredients_list;
-                        document.getElementById("recipeTime").value = data.time;
-                        document.getElementById("recipeMethod").value = data.method;
-                        document.getElementById("createForm").style.display = "block";
-                    });
+        function renderTableView(recipes) {
+            const tableBody = document.querySelector("#recipeTable tbody");
+            tableBody.innerHTML = "";
+            if (recipes.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
+            } else {
+                recipes.forEach(recipe => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${recipe.id}</td>
+                        <td>${recipe.name}</td>
+                        <td>${recipe.meal_type}</td>
+                        <td>${recipe.ingredients_count}</td>
+                        <td>${recipe.ingredients_list}</td>
+                        <td>${recipe.time}</td>
+                        <td>${recipe.method}</td>
+                        <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
+                        <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        function loadRecipes() {
+            fetch(API_URL)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network error: ' + response.statusText);
+                    return response.json();
+                })
+                .then(recipes => {
+                    if (currentView === 'card') {
+                        renderCardView(recipes);
+                    } else {
+                        renderTableView(recipes);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching recipes:", error);
+                    renderCardView([]);
+                    renderTableView([]);
+                });
+        }
+
+        function toggleView() {
+            const tableView = document.getElementById('tableView');
+            const cardView = document.getElementById('cardView');
+            const toggleButton = document.getElementById('toggleViewBtn');
+
+            if (currentView === 'card') {
+                cardView.style.display = 'none';
+                tableView.style.display = 'block';
+                toggleButton.textContent = 'Switch to Card View';
+                currentView = 'table';
+                loadRecipes();
+            } else {
+                tableView.style.display = 'none';
+                cardView.style.display = 'grid';
+                toggleButton.textContent = 'Switch to Table View';
+                currentView = 'card';
+                loadRecipes();
+            }
+        }
+
+        function saveRecipe(event) {
+            if (event) event.preventDefault();
+            const id = document.getElementById("recipeId").value;
+            const recipe = {
+                name: document.getElementById("recipeName").value,
+                meal_type: document.getElementById("mealType").value,
+                ingredients_count: parseInt(document.getElementById("ingredientCount").value),
+                ingredients_list: document.getElementById("ingredientList").value,
+                time: document.getElementById("recipeTime").value,
+                method: document.getElementById("recipeMethod").value,
+                difficulty: document.getElementById("difficulty").value
             };
 
-            function searchByIngredient() {
-                const searchTerm = document.getElementById("ingredientSearch").value.toLowerCase();
-               
-                fetch(API_URL)
+            const method = id ? "PUT" : "POST";
+            const url = id ? `${API_URL}/${id}` : API_URL;
+
+            fetch(url, {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(recipe)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Recipe saved!");
+                    hideCreateForm();
+                    document.getElementById("recipeForm").reset();
+                    document.getElementById("recipeId").value = "";
+                    loadRecipes();
+                } else {
+                    alert("Failed to save recipe.");
+                }
+            });
+        }
+
+        window.editRecipe = function(id) {
+            fetch(`${API_URL}/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("recipeId").value = data.id;
+                    document.getElementById("recipeName").value = data.name;
+                    document.getElementById("mealType").value = data.meal_type;
+                    document.getElementById("ingredientCount").value = data.ingredients_count;
+                    document.getElementById("ingredientList").value = data.ingredients_list;
+                    document.getElementById("recipeTime").value = data.time;
+                    document.getElementById("recipeMethod").value = data.method;
+                    document.getElementById("difficulty").value = data.difficulty || "Easy";
+                    document.getElementById("createForm").style.display = "block";
+                    document.getElementById("createForm").classList.add("visible");
+                });
+        };
+
+        function searchByIngredient() {
+            const searchTerm = document.getElementById("ingredientSearch").value.toLowerCase();
+            fetch(API_URL)
                 .then(response => response.json())
                 .then(recipes => {
                     const filtered = recipes.filter(recipe =>
-        recipe.ingredients_list.toLowerCase().includes(searchTerm)
-    );
-    if (currentView === 'card') {
-        renderCardView(filtered);
-      } else {
-        renderTableView(filtered);
-      }
-    })
-    .catch(error => {
-      console.error("Error fetching recipes:", error);
-    });
-}
-
-    if (filtered.length === 0) {
-        const grid = document.querySelector(".recipe-grid");
-        grid.innerHTML = "<p>No recipes found with that ingredient.</p>";
-        const tableBody = document.querySelector("#RecipeTable tbody");
-        tableBody.innerHTML = "<tr><td colspan='9'>No recipes found with that ingredient.</td></tr>";
-    } else {
-        // Render card view
-        const grid = document.querySelector(".recipe-grid");
-        grid.innerHTML = "";
-        filtered.forEach(recipe => {
-            const card = document.createElement("div");
-            card.className = "recipe-card";
-            card.innerHTML = `
-                <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
-                <h3 class="recipe-title">${recipe.name}</h3>
-                <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
-                <p class="recipe-time">Time: ${recipe.time}</p>
-                <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
-                <p class="recipe-method">Method: ${recipe.method}</p>
-                <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
-                <div class="recipe-actions">
-                    <button onclick="editRecipe(${recipe.id})">Update</button>
-                    <button onclick="deleteRecipe(${recipe.id})">Delete</button>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-
-        // Render table view
-        const tableBody = document.querySelector("#RecipeTable tbody");
-        tableBody.innerHTML = "";
-        filtered.forEach(recipe => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${recipe.id}</td>
-                <td>${recipe.name}</td>
-                <td>${recipe.meal_type}</td>
-                <td>${recipe.ingredients_count}</td>
-                <td>${recipe.ingredients_list}</td>
-                <td>${recipe.time}</td>
-                <td>${recipe.method}</td>
-                <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
-                <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-});
-let currentView = 'card';
-
-function toggleView() {
-  const tableView = document.getElementById('recipeTableView');
-  const cardView = document.getElementById('recipeCardView');
-  const toggleButton = document.querySelector('button[onclick="toggleView()"]');
-
-  if (currentView === 'card') {
-    cardView.style.display = 'none';
-    tableView.style.display = 'block';
-    toggleButton.textContent = 'Switch to Card View';
-    currentView = 'table';
-  } else {
-    tableView.style.display = 'none';
-    cardView.style.display = 'grid';
-    toggleButton.textContent = 'Switch to Table View';
-    currentView = 'card';
-  }
-}
-            window.deleteRecipe = function(id) {
-                fetch(`${API_URL}/${id}`, {
-                    method: "DELETE"
-                }).then(response => {
-                    if (response.ok) {
-                        alert("Recipe deleted successfully!");
-                        loadRecipes();
+                        recipe.ingredients_list.toLowerCase().includes(searchTerm)
+                    );
+                    if (currentView === 'card') {
+                        renderCardView(filtered);
                     } else {
-                        alert("Failed to delete recipe.");
+                        renderTableView(filtered);
                     }
+                })
+                .catch(error => {
+                    console.error("Error fetching recipes:", error);
                 });
-            };
+        }
 
-            window.saveRecipe = saveRecipe;
-            window.showCreateForm = showCreateForm;
-            window.hideCreateForm = hideCreateForm;
-            window.loadRecipes = loadRecipes;
-            // Load on start
+        window.deleteRecipe = function(id) {
+            fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            }).then(response => {
+                if (response.ok) {
+                    alert("Recipe deleted successfully!");
+                    loadRecipes();
+                } else {
+                    alert("Failed to delete recipe.");
+                }
+            });
+        };
+
+        window.saveRecipe = saveRecipe;
+        window.showCreateForm = showCreateForm;
+        window.hideCreateForm = hideCreateForm;
+        window.loadRecipes = loadRecipes;
+        window.toggleView = toggleView;
+        window.searchByIngredient = searchByIngredient;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadRecipes();
+        });
+    </script>
+        document.addEventListener("DOMContentLoaded", function () {
             loadRecipes();
         });
     </script>
 </body>
 </html>
+
