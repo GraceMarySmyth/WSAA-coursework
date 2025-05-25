@@ -148,11 +148,43 @@
     <h1>Smyth Family Recipes</h1>
     <h2>Welcome to the recipe viewer</h2>
     <p>Here you can view, create, update, and delete recipes.</p>
-    <div class="recipe-grid"></div>
+    <div id="recipeCardView" class="recipe-grid"></div>
     <div>
+  <button onclick="toggleView()">Switch to Table View</button>
+</div>
+
+<!-- Card View (visible by default) -->
+<div id="recipeCardView" class="recipe-grid"></div>
+
+<!-- Table View (hidden by default) -->
+<div id="recipeTableView" style="display: none;">
+  <table id="RecipeTable" border="1">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Name of recipe</th>
+        <th>Meal type</th>
+        <th>Number of Ingredients</th>
+        <th>Ingredient List</th>
+        <th>Time</th>
+        <th>Method</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Table rows populated by JavaScript -->
+    </tbody>
+  </table>
+</div>
+   
+    <div>
+        <button onclick="toggleView()">Switch to Table View</button>
+    </div>
+
         <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
         <button onclick="location.reload()">View all recipes</button><br/><br/>
-        <button onclick="toggleView()">Switch to Table View</button>
+        
     </div>
 
     <h2>Search by Ingredient</h2>
@@ -162,27 +194,26 @@
     <button onclick="searchByIngredient()">Search</button>
     <button onclick="loadRecipes()">Reset</button>
     </div><br/>
-<div>
+
     let currentView = 'card';
 
     function toggleView() {
-  const tableView = document.getElementById('recipeTableView');
-  const cardView = document.getElementById('recipeCardView');
-  const toggleButton = document.querySelector('button[onclick="toggleView()"]');
+        const tableView = document.getElementById('recipeTableView');
+        const cardView = document.getElementById('recipeCardView');
+        const toggleButton = document.querySelector('button[onclick="toggleView()"]');
 
-  if (currentView === 'card') {
-    cardView.style.display = 'none';
-    tableView.style.display = 'block';
-    toggleButton.textContent = 'Switch to Card View';
-    currentView = 'table';
-  } else {
-    tableView.style.display = 'none';
-    cardView.style.display = 'block';
-    toggleButton.textContent = 'Switch to Table View';
-    currentView = 'card';
-  }
-}
-</div>
+        if (currentView === 'card') {
+            cardView.style.display = 'none';
+            tableView.style.display = 'block';
+            toggleButton.textContent = 'Switch to Card View';
+            currentView = 'table';
+        } else {
+            tableView.style.display = 'none';
+            cardView.style.display = 'block';
+            toggleButton.textContent = 'Switch to Table View';
+            currentView = 'card';
+        }
+    }
     <div style="overflow-x:auto;">
         <table id="RecipeTable" border="1">
             <thead>
@@ -348,35 +379,86 @@
                 .then(response => response.json())
                 .then(recipes => {
                     const filtered = recipes.filter(recipe =>
-                        recipe.ingredients_list.toLowerCase().includes(searchTerm)
-            );
-
-                if (currentView === 'Card') {
-                    renderCardView(filtered);
-                } else {
-                    renderTableView(filtered);
-                }
-                        tableBody.innerHTML = "<tr><td colspan='9'>No recipes found with that ingredient.</td></tr>";
-                    } else {
-                        filtered.forEach(recipe => {
-                            const row = document.createElement("tr");
-                            row.innerHTML = `
-                                <td>${recipe.id}</td>
-                                <td>${recipe.name}</td>
-                                <td>${recipe.meal_type}</td>
-                                <td>${recipe.ingredients_count}</td>
-                                <td>${recipe.ingredients_list}</td>
-                                <td>${recipe.time}</td>
-                                <td>${recipe.method}</td>
-                                <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
-                                <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
-                         `;
-                        tableBody.appendChild(row);
-                });
-            }
-        });
+        recipe.ingredients_list.toLowerCase().includes(searchTerm)
+    );
+    if (currentView === 'card') {
+        renderCardView(filtered);
+      } else {
+        renderTableView(filtered);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching recipes:", error);
+    });
 }
 
+    if (filtered.length === 0) {
+        const grid = document.querySelector(".recipe-grid");
+        grid.innerHTML = "<p>No recipes found with that ingredient.</p>";
+        const tableBody = document.querySelector("#RecipeTable tbody");
+        tableBody.innerHTML = "<tr><td colspan='9'>No recipes found with that ingredient.</td></tr>";
+    } else {
+        // Render card view
+        const grid = document.querySelector(".recipe-grid");
+        grid.innerHTML = "";
+        filtered.forEach(recipe => {
+            const card = document.createElement("div");
+            card.className = "recipe-card";
+            card.innerHTML = `
+                <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
+                <h3 class="recipe-title">${recipe.name}</h3>
+                <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
+                <p class="recipe-time">Time: ${recipe.time}</p>
+                <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
+                <p class="recipe-method">Method: ${recipe.method}</p>
+                <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
+                <div class="recipe-actions">
+                    <button onclick="editRecipe(${recipe.id})">Update</button>
+                    <button onclick="deleteRecipe(${recipe.id})">Delete</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Render table view
+        const tableBody = document.querySelector("#RecipeTable tbody");
+        tableBody.innerHTML = "";
+        filtered.forEach(recipe => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${recipe.id}</td>
+                <td>${recipe.name}</td>
+                <td>${recipe.meal_type}</td>
+                <td>${recipe.ingredients_count}</td>
+                <td>${recipe.ingredients_list}</td>
+                <td>${recipe.time}</td>
+                <td>${recipe.method}</td>
+                <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
+                <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+});
+let currentView = 'card';
+
+function toggleView() {
+  const tableView = document.getElementById('recipeTableView');
+  const cardView = document.getElementById('recipeCardView');
+  const toggleButton = document.querySelector('button[onclick="toggleView()"]');
+
+  if (currentView === 'card') {
+    cardView.style.display = 'none';
+    tableView.style.display = 'block';
+    toggleButton.textContent = 'Switch to Card View';
+    currentView = 'table';
+  } else {
+    tableView.style.display = 'none';
+    cardView.style.display = 'grid';
+    toggleButton.textContent = 'Switch to Table View';
+    currentView = 'card';
+  }
+}
             window.deleteRecipe = function(id) {
                 fetch(`${API_URL}/${id}`, {
                     method: "DELETE"

@@ -102,3 +102,5 @@ https://forum.freecodecamp.org/t/solved-fetch-api-not-working-at-all-or-working-
 https://www.geeksforgeeks.org/what-is-javascript-rendering/
 
 https://crawlee.dev/js/docs/guides/javascript-rendering
+
+https://www.youtube.com/watch?v=czZ1PvNW5hk
