@@ -327,7 +327,9 @@
                 ingredients_list: document.getElementById("ingredientList").value,
                 time: document.getElementById("recipeTime").value,
                 method: document.getElementById("recipeMethod").value,
-                difficulty: document.getElementById("difficulty").value
+                difficulty: document.getElementById("difficulty").value,
+        
+                }
             };
 
             const method = id ? "PUT" : "POST";
@@ -337,7 +339,8 @@
                 method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(recipe)
-            }).then(response => {
+            })
+            .then(response => {
                 if (response.ok) {
                     alert("Recipe saved!");
                     hideCreateForm();
@@ -347,10 +350,14 @@
                 } else {
                     alert("Failed to save recipe.");
                 }
+            })
+            .catch(error => {
+                console.error("Error saving recipe:", error);
+                alert("Failed to save recipe.");
             });
         }
 
-        window.editRecipe = function(id) {
+        function editRecipe(id) {
             fetch(`${API_URL}/${id}`)
                 .then(response => response.json())
                 .then(data => {
@@ -364,6 +371,10 @@
                     document.getElementById("difficulty").value = data.difficulty || "Easy";
                     document.getElementById("createForm").style.display = "block";
                     document.getElementById("createForm").classList.add("visible");
+                })
+                .catch(error => {
+                    console.error("Error fetching recipe for edit:", error);
+                    alert("Failed to load recipe for editing.");
                 });
         };
 
