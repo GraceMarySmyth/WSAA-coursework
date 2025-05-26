@@ -123,7 +123,14 @@ def export_recipes(format):
     else:
         return jsonify({"error": "Unsupported export format. Use 'json' or 'csv'."}), 400
 
+# commented out to get python anywhere to work and replaced with below
+  #  if __name__ == "__main__":
+  #      with app.app_context():
+  #          db.create_all()
+#     app.run(debug = True)
+
+with app.app_context():
+    db.create_all()
+
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()   
-    app.run(debug = True)
+    app.run()
