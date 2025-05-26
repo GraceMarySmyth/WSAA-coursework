@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smyth Family Recipes</title>
+    <style>
+        .container { 
+            max-width: 900px;
+            margin: auto;
+            background-color: #fff; 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Segoe UI',Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf6e3;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2a7f62;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x:auto;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+        th {
+            background-color: #d366b2;
+        }
+        button {
+            background-color: #ff8c42;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 8px 4px 0 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+        #createForm {
+            margin-top: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            height: auto;
+            overflow: hidden;
+        }
+
+        #createForm.visible {
+            opacity: 1;
+            visibility: visible;
+            max-height: 1000px; /* Adjust as needed */
+        }
+        /* Container for the grid */
+        .recipe-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        }
+        /* Responsive design for smaller screens */
+
+        /* Individual recipe card */
+        .recipe-card {
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          transition: transform 0.2s;
+        }
+
+        .recipe-card:hover {
+        transform: translateY(-5px);
+        }
+
+        /* Recipe image */
+        .recipe-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        }
+
+        /* Recipe details */
+        .recipe-title {
+        font-size: 1.5em;
+        margin: 10px;
+        color: #2a7f62;}
+
+        .recipe-type,
+        .recipe-time,
+        .recipe-ingredients {
+          margin: 0 10px 10px 10px;
+          color: #555;
+}
+
+        /* Action buttons */
+        .recipe-actions {
+        display: flex;
+        justify-content: space-around;
+         padding: 10px;
+        }
+
+        .recipe-actions button {
+        background-color: #ff8c42;
+        border: none;
+        color: white;
+         padding: 8px 12px;
+         border-radius: 5px;
+         cursor: pointer;
+         transition: background-color 0.3s;
+        }
+
+        .recipe-actions button:hover {
+        background-color: #e67e22;
+        }
+        @media (max-width: 768px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-image {
+    height: 150px;
+  }
+        }
+    </style>
+</head>
+    
+<body>
+    <div class="container">
+        <h1>Smyth Family Recipes</h1>
+        <h2>Welcome to the recipe viewer</h2>
+        <p>Here you can view, create, update, and delete recipes.</p>
+        <div id="cardView" class="recipe-grid"></div>
+        
+        <div>
+            <button id="toggleViewBtn" onclick="toggleView()">Switch to Table View</button>
+        </div>
+        <button onclick="showCreateForm()">Create a recipe</button><br/><br/>
+        <button onclick="location.reload()">View all recipes</button><br/><br/>
+    </div>
+ <div id="createForm">
+        <form id="recipeForm" onsubmit="saveRecipe(event)">
+            <input type="hidden" id="recipeId">
+            
+            <label>Name of Recipe:</label><br/>
+            <input type="text" id="recipeName" required><br/>
+
+            <label>Meal Type:</label><br/>
+            <input type="text" id="mealType" required><br/>
+
+            <label>Number of Ingredients:</label><br/>
+            <input type="number" id="ingredientCount" required><br/>
+
+            <label>Ingredient List:</label><br/>
+            <input type="text" id="ingredientList" required><br/>
+
+            <label>Time:</label><br/>
+            <input type="text" id="recipeTime" required><br/>
+
+            <label>Method:</label><br/>
+            <textarea id="recipeMethod" required></textarea><br/>
+
+            <label>Skill Level:</label><br/>
+            <select id="difficulty">
+                <option value="Easy">Easy Recipe</option>
+                <option value="Moderate">Some skills required</option>
+                <option value="Difficult">Time and skills required</option>
+            </select><br/><br/>
+
+            <button type="submit" id="saveRecipeBtn">Save Recipe</button>
+            <button type="button" onclick="hideCreateForm()">Cancel</button>
+        </form>
+    </div>
+    <div id="tableView" style="display: none;">
+        <div style="overflow-x:auto;">
+            <table id="recipeTable" border="1">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Name of recipe</th>
+                        <th>Meal type</th>
+                        <th>Number of Ingredients</th>
+                        <th>Ingredient List</th>
+                        <th>Time</th>
+                        <th>Method</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table rows populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2>Search by Ingredient</h2>
+    <p>Enter an ingredient to search for recipes that include it.</p>
+    <div>
+        <input type="text" id="ingredientSearch" placeholder="Enter ingredient to search">
+        <button onclick="searchByIngredient()">Search</button>
+        <button onclick="loadRecipes()">Reset</button>
+    </div><br/>
+
+ 
+    <script>
+        const API_URL = "http://localhost:5000/recipes";
+        let currentView = 'card';
+
+        function showCreateForm() {
+            document.getElementById("recipeForm").reset();
+            document.getElementById("recipeId").value = "";
+            document.getElementById("createForm").style.display = "block";
+            document.getElementById("createForm").classList.add("visible");
+        }
+        function hideCreateForm() {
+            document.getElementById("createForm").classList.remove("visible");
+            document.getElementById("createForm").style.display = "none";
+        }
+
+        function renderCardView(recipes) {
+            const grid = document.getElementById("cardView");
+            grid.innerHTML = "";
+            if (recipes.length === 0) {
+                grid.innerHTML = "<p>No recipes found.</p>";
+            } else {
+                recipes.forEach(recipe => {
+                    const card = document.createElement("div");
+                    card.className = "recipe-card";
+                    card.innerHTML = `
+                        <img src="${recipe.image_url || 'https://via.placeholder.com/300x200?text=No+Image'}" class="recipe-image" alt="${recipe.name}">
+                        <h3 class="recipe-title">${recipe.name}</h3>
+                        <p class="recipe-type">Meal Type: ${recipe.meal_type}</p>
+                        <p class="recipe-time">Time: ${recipe.time}</p>
+                        <p class="recipe-ingredients">Ingredients: ${recipe.ingredients_list}</p>
+                        <p class="recipe-method">Method: ${recipe.method}</p>
+                        <p class="recipe-difficulty">Difficulty: ${recipe.difficulty}</p>
+                        <div class="recipe-actions">
+                            <button onclick="editRecipe(${recipe.id})">Update</button>
+                            <button onclick="deleteRecipe(${recipe.id})">Delete</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function renderTableView(recipes) {
+            const tableBody = document.querySelector("#recipeTable tbody");
+            tableBody.innerHTML = "";
+            if (recipes.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='9'>No recipes found.</td></tr>";
+            } else {
+                recipes.forEach(recipe => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${recipe.id}</td>
+                        <td>${recipe.name}</td>
+                        <td>${recipe.meal_type}</td>
+                        <td>${recipe.ingredients_count}</td>
+                        <td>${recipe.ingredients_list}</td>
+                        <td>${recipe.time}</td>
+                        <td>${recipe.method}</td>
+                        <td><button onclick="editRecipe(${recipe.id})">Update</button></td>
+                        <td><button onclick="deleteRecipe(${recipe.id})">Delete</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        function loadRecipes() {
+            fetch(API_URL)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network error: ' + response.statusText);
+                    return response.json();
+                })
+                .then(recipes => {
+                    if (currentView === 'card') {
+                        renderCardView(recipes);
+                    } else {
+                        renderTableView(recipes);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching recipes:", error);
+                    if (currentView === 'card') {
+                        renderCardView([]);
+                    } else {
+                        renderTableView([]);
+                    }
+                });
+        }
+
+        function toggleView() {
+            const tableView = document.getElementById('tableView');
+            const cardView = document.getElementById('cardView');
+            const toggleButton = document.getElementById('toggleViewBtn');
+
+            if (currentView === 'card') {
+                cardView.style.display = 'flex';
+                cardView.style.flexWrap = 'wrap';
+                tableView.style.display = 'block';
+                toggleButton.textContent = 'Switch to Card View';
+                currentView = 'table';
+                loadRecipes();
+            } else {
+                tableView.style.display = 'flex';
+                tableView.style.flexWrap = 'wrap';
+                cardView.style.display = '';
+                toggleButton.textContent = 'Switch to Table View';
+                currentView = 'card';
+                loadRecipes();
+            }
+        }
+
+        function saveRecipe(event) {
+            if (event) event.preventDefault();
+            const id = document.getElementById("recipeId").value;
+            const recipe = {
+            name: document.getElementById("recipeName").value,
+            meal_type: document.getElementById("mealType").value,
+            ingredients_count: parseInt(document.getElementById("ingredientCount").value),
+            ingredients_list: document.getElementById("ingredientList").value,
+            time: document.getElementById("recipeTime").value,
+            method: document.getElementById("recipeMethod").value,
+            difficulty: document.getElementById("difficulty").value
+            };
+
+            const method = id ? "PUT" : "POST";
+            const url = id ? `${API_URL}/${id}` : API_URL;
+
+            fetch(url, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(recipe)
+            })
+            .then(response => {
+            if (response.ok) {
+                alert("Recipe saved!");
+                hideCreateForm();
+                document.getElementById("recipeForm").reset();
+                document.getElementById("recipeId").value = "";
+                loadRecipes();
+            } else {
+                alert("Failed to save recipe.");
+            }
+            })
+            .catch(error => {
+            console.error("Error saving recipe:", error);
+            alert("Failed to save recipe.");
+            });
+        }
+
+        function editRecipe(id) {
+            fetch(`${API_URL}/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("recipeId").value = data.id;
+                    document.getElementById("recipeName").value = data.name;
+                    document.getElementById("mealType").value = data.meal_type;
+                    document.getElementById("ingredientCount").value = data.ingredients_count;
+                    document.getElementById("ingredientList").value = data.ingredients_list;
+                    document.getElementById("recipeTime").value = data.time;
+                    document.getElementById("recipeMethod").value = data.method;
+                    document.getElementById("difficulty").value = data.difficulty || "Easy";
+                    document.getElementById("createForm").style.display = "block";
+                    document.getElementById("createForm").classList.add("visible");
+                })
+                .catch(error => {
+                    console.error("Error fetching recipe for edit:", error);
+                    alert("Failed to load recipe for editing.");
+                });
+        };
+
+        function searchByIngredient() {
+            const searchTerm = document.getElementById("ingredientSearch").value.toLowerCase();
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(recipes => {
+                    const filtered = recipes.filter(recipe =>
+                        recipe.ingredients_list.toLowerCase().includes(searchTerm)
+                    );
+                    if (currentView === 'card') {
+                        renderCardView(filtered);
+                    } else {
+                        renderTableView(filtered);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching recipes:", error);
+                });
+        }
+
+        window.deleteRecipe = function(id) {
+            fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            }).then(response => {
+                if (response.ok) {
+                    alert("Recipe deleted successfully!");
+                    loadRecipes();
+                } else {
+                    alert("Failed to delete recipe.");
+                }
+            });
+        };
+
+        window.saveRecipe = saveRecipe;
+        window.showCreateForm = showCreateForm;
+        window.hideCreateForm = hideCreateForm;
+        window.loadRecipes = loadRecipes;
+        window.toggleView = toggleView;
+        window.searchByIngredient = searchByIngredient;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadRecipes();
+        });
+    </script>
+</body>
+</html>
+
