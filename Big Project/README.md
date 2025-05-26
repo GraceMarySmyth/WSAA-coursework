@@ -60,7 +60,7 @@ configuration file for database
 recipe_viewer.html
 
 Hosted on-line at:
-GraceMarySmyth1.pythonanywhere.com.
+GraceMarySmyth1.pythonanywhere.com. https://gracemarysmyth1.pythonanywhere.com/
 
 
 References:
